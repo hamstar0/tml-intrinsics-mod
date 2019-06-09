@@ -1,0 +1,51 @@
+v1
+-	Create chat/console command for creating contracts
+-	API
+	-	Assign an intrinsic
+	-	Define and spawn a Destiny Contract
+-	Create item sprites
+-	Create Impartment Contract
+	-	Implement assigning of items
+	-	Define item
+-	Create Blank Contract
+	-	Define contract creation (1)
+		-	Implement item creation
+		-	Filter items without intrinsics (needs intrinsics list)
+
+		-	Implement drag and drop list making
+		-	@Ideas
+			1.	Drag and drop items, then "consume" to confirm
+			2.	A dedicated writing desk station giving item slot UI
+			3.	NPC with UI like above
+	-	Define item
+-	Create project
+
+
+
+Rarest/hardest-to-get item values
+-	Top level items
+	-	Greedy Ring (25x)
+	-	Uzi (20x)
+	-	Rod of Discord (15x)
+	-	Angler Tackle Bag (15x)
+	-	Coin Gun (10x)
+	-	Ankh Shield (10x)
+	-	Cellphone (10x)
+	-	Amber Mosquito (10x)
+	-	Frozen Turtle Shell (5x)
+	-	Fire Gauntlet (5x)
+	-	Architect Gizmo Pack (5x)
+	-	Master Ninja Gear (5x)
+	-	Bundle of Balloons (5x)
+	-	Terra Blade (5x)
+	-	Frostspark Boots (5x)
+	-	Arctic Diving Gear (5x)
+	-	Lava Waders (5x)
+	-	Biome Keys (2x)
+	-	Pocket Mirror (2x)
+	-	Hand Warmer (2x)
+	-	Angel Statue (1x)
+-	In consideration
+	-	Celestial Emblem
+	-	Celestial Cuffs
+
