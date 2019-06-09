@@ -6,7 +6,7 @@ namespace Intrinsics.Items {
 	public partial class BlankContractItem : ModItem {
 		public override void AddRecipes() {
 			var mymod = (IntrinsicsMod)this.mod;
-			if( mymod.Config.BlankContractRecipeIngredients.Length > 0 ) {
+			if( mymod.Config.BlankContractRecipeIngredients.Length == 0 ) {
 				return;
 			}
 

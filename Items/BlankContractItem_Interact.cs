@@ -29,6 +29,12 @@ namespace Intrinsics.Items {
 		////////////////
 
 		public bool CanAddItem( Item item ) {
+/*Main.NewText( "CanAddItem - "+
+	"is new? "+this.IntrinsicItemUids.Contains( ItemIdentityHelpers.GetProperUniqueId(item.type) )+
+	", is buff? "+(item.buffType != 0)+
+	", is acc? "+item.accessory+
+	", is armor? "+ItemAttributeHelpers.IsArmor( item )
+);*/
 			if( this.IntrinsicItemUids.Contains( ItemIdentityHelpers.GetProperUniqueId(item.type) ) ) {
 				return false;
 			}

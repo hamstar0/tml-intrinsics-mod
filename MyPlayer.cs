@@ -115,7 +115,7 @@ namespace Intrinsics {
 			if( Main.mouseItem != null && !Main.mouseItem.IsAir ) {
 				if( plr.HeldItem.type == this.mod.ItemType<BlankContractItem>() ) {
 					if( this.PrevSelectedItem != null ) {
-						this.AttemptBlankContractAddCurrentItem( plr );
+						IntrinsicsPlayer.AttemptBlankContractAddCurrentItem( plr );
 						this.PrevSelectedItem = null;
 					}
 				} else {

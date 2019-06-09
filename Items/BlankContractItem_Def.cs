@@ -15,17 +15,9 @@ namespace Intrinsics.Items {
 		////////////////
 
 		public int MyLastInventoryPosition { get; private set; }
-		public override bool CloneNewInstances => true;
 
+		public override bool CloneNewInstances => false;
 
-
-		////////////////
-
-		public override ModItem Clone() {
-			var clone = (BlankContractItem)base.Clone();
-			clone.IntrinsicItemUids = this.IntrinsicItemUids;
-			return clone;
-		}
 
 
 		////////////////
@@ -33,9 +25,8 @@ namespace Intrinsics.Items {
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Blank Contract" );
 			this.Tooltip.SetDefault( "Write your own destiny.\n"+
-				"Select and drop an item onto this contract to bind it.\n"+
-				"Bound items, if valid, confer their special traits to the contract.\n"+
-				"Agreeing to the contract permanently bestows its bound traits."
+				"Select and drop an item onto this contract to bind it, if valid.\n" +
+				"Agreeing to the contract permanently bestows its bound item's traits."
 			);
 		}
 

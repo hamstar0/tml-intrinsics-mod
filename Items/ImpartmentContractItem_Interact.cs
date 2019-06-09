@@ -9,7 +9,7 @@ namespace Intrinsics.Items {
 				return false;
 			}
 			
-			f
+			Main.NewText( string.Join(", ", this.IntrinsicItemUids) );
 
 			return true;
 		}
