@@ -1,3 +1,4 @@
+using HamstarHelpers.Helpers.TmlHelpers;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -8,9 +9,13 @@ namespace Intrinsics.Items {
 			if( Main.mouseRight ) {
 				return false;
 			}
-			
-			Main.NewText( string.Join(", ", this.IntrinsicItemUids) );
 
+			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( player );
+
+			foreach( string itemUid in this.IntrinsicItemUids ) {
+				myplayer.ApplyIntrinsic( itemUid );
+			}
+			
 			return true;
 		}
 

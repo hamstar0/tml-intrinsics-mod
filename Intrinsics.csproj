@@ -36,17 +36,20 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Logic.cs" />
     <Compile Include="Items\BlankContractItem_Interact.cs" />
     <Compile Include="Items\BlankContractItem_Recipe.cs" />
     <Compile Include="Items\BlankContractItem_Def.cs" />
     <Compile Include="Items\ImpartmentContractItem_Interact.cs" />
     <Compile Include="Items\ImpartmentContractItem_Def.cs" />
+    <Compile Include="Libraries\Helpers\Items\ItemIdentityHelpers.cs" />
     <Compile Include="MyMod.cs" />
+    <Compile Include="MyPlayer_Intrinsics.cs" />
     <Compile Include="MyPlayer.cs" />
     <Compile Include="NetProtocols\IntrinsicsSyncProtocol.cs" />
     <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
     <Compile Include="MyMod_Meta.cs" />
-    <Compile Include="Components\Protocol\Packet\Interfaces\SyncClient.cs" />
+    <Compile Include="Libraries\Components\Protocol\Packet\Interfaces\SyncClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HamstarHelpers">
@@ -86,6 +89,7 @@
     <None Include="LICENSE" />
     <None Include="README.md" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Program Files (x86)\Steam\steamapps\common\terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>

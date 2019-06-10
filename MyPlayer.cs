@@ -6,10 +6,11 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 
 namespace Intrinsics {
-	class IntrinsicsPlayer : ModPlayer {
+	partial class IntrinsicsPlayer : ModPlayer {
 		private static bool AttemptBlankContractAddCurrentItem( Player player ) {
 			var contractItem = Main.mouseItem.modItem as BlankContractItem;
 			if( contractItem == null ) {
@@ -47,6 +48,10 @@ namespace Intrinsics {
 
 		public ISet<string> IntrinsicItemUids = new HashSet<string>();
 
+		private IDictionary<int, Item> IntrinsicArmItem = new Dictionary<int, Item>();
+		private IDictionary<int, Item> IntrinsicAccItem = new Dictionary<int, Item>();
+		private IDictionary<int, Item> IntrinsicBuffItem = new Dictionary<int, Item>();
+
 		private Item PrevSelectedItem = null;
 
 
@@ -55,6 +60,33 @@ namespace Intrinsics {
 
 		public override bool CloneNewInstances => false;
 
+
+
+		////////////////
+
+		public override void Load( TagCompound tag ) {
+			if( !tag.ContainsKey("item_count") ) {
+				return;
+			}
+
+			int count = tag.GetInt( "item_count" );
+
+			for( int i=0; i<count; i++ ) {
+				this.IntrinsicItemUids.Add( tag.GetString("item_"+i) );
+			}
+		}
+
+		public override TagCompound Save() {
+			int count = this.IntrinsicItemUids.Count;
+			var tag = new TagCompound { { "item_count", count } };
+
+			int i = 0;
+			foreach( string itemUid in this.IntrinsicItemUids ) {
+				tag[ "item_" + i ] = itemUid;
+			}
+
+			return tag;
+		}
 
 
 		////////////////
@@ -108,6 +140,15 @@ namespace Intrinsics {
 		
 		////////////////
 
+		public override void PreUpdate() {
+			//Player plr = this.player;
+			//if( plr.whoAmI != Main.myPlayer ) { return; }
+			//if( plr.dead ) { return; }
+
+			//var mymod = (IntrinsicsMod)this.mod;
+			this.UpdateIntrinsicBuffs();
+		}
+
 		public override void PostUpdate() {
 			Player plr = this.player;
 			if( plr.whoAmI != Main.myPlayer ) { return; }
@@ -126,24 +167,8 @@ namespace Intrinsics {
 			}
 		}
 
-
-		////////////////
-
-		/*public override void PreUpdate() {
-			Player plr = this.player;
-			if( plr.whoAmI != Main.myPlayer ) { return; }
-			if( plr.dead ) { return; }
-
-			var mymod = (IntrinsicsMod)this.mod;
-		}*/
-
 		public override void UpdateEquips( ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff ) {
-			//if( this.TestItem != null ) {
-			//	bool _ = false;
-			//	//VanillaUpdateInventory( this.inventory[j] );
-			//	this.player.VanillaUpdateEquip( this.TestItem );
-			//	this.player.VanillaUpdateAccessory( this.player.whoAmI, this.TestItem, false, ref _, ref _, ref _ );
-			//}
+			this.UpdateIntrinsicEquips();
 		}
 	}
 }

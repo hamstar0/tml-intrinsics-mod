@@ -38,7 +38,7 @@ namespace Intrinsics.Items {
 			if( this.IntrinsicItemUids.Contains( ItemIdentityHelpers.GetProperUniqueId(item.type) ) ) {
 				return false;
 			}
-			return item.buffType != 0 || item.accessory || ItemAttributeHelpers.IsArmor( item );
+			return IntrinsicsLogic.ItemHasIntrinsics( item );
 		}
 
 		public bool AddItem( Player player, Item item ) {

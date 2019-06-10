@@ -4,7 +4,7 @@ using System;
 using Terraria;
 
 
-namespace Intrinsics.Components.Protocol.Packet.Interfaces {
+namespace Libraries.Intrinsics.Components.Protocol.Packet.Interfaces {
 	public abstract class PacketProtocolSyncClient : PacketProtocol {
 		public static void SyncFromMe<T>() where T : PacketProtocolSyncClient {
 			PacketProtocol.QuickSendToServer<T>();

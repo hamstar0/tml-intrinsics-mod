@@ -1,5 +1,5 @@
 ﻿using HamstarHelpers.Helpers.TmlHelpers;
-using Intrinsics.Components.Protocol.Packet.Interfaces;
+using Libraries.Intrinsics.Components.Protocol.Packet.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
