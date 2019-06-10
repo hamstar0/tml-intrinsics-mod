@@ -1,8 +1,7 @@
-﻿using HamstarHelpers.Components.Network;
-using HamstarHelpers.Helpers.DebugHelpers;
+﻿using HamstarHelpers.Helpers.DebugHelpers;
 using Intrinsics.Items;
-using Intrinsics.Libraries.Helpers.Items;
 using Intrinsics.NetProtocols;
+using Intrinsics.NPCs;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -144,11 +143,15 @@ namespace Intrinsics {
 		////////////////
 
 		public override void PreUpdate() {
-			//Player plr = this.player;
+			var mymod = (IntrinsicsMod)this.mod;
+			Player plr = this.player;
 			//if( plr.whoAmI != Main.myPlayer ) { return; }
 			//if( plr.dead ) { return; }
 
-			//var mymod = (IntrinsicsMod)this.mod;
+			if( plr.whoAmI == Main.myPlayer ) {
+				mymod.IsTrading = mymod.IsTrading && GhostWanderingNPC.CanTrade();
+			}
+
 			this.UpdateIntrinsicBuffs();
 		}
 

@@ -1,5 +1,6 @@
 using HamstarHelpers.Components.Config;
 using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
+using Terraria;
 using Terraria.ModLoader;
 
 
@@ -10,9 +11,12 @@ namespace Intrinsics {
 
 
 		////////////////
-
+		
 		public JsonConfig<IntrinsicsConfigData> ConfigJson { get; private set; }
 		public IntrinsicsConfigData Config => this.ConfigJson.Data;
+
+		private Item TradeItem = new Item();
+		internal bool IsTrading = false;
 
 
 

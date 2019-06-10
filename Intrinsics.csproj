@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Libraries\Helpers\NPCs\NPCHelpers.cs" />
     <Compile Include="Logic.cs" />
     <Compile Include="Items\BlankContractItem_Interact.cs" />
     <Compile Include="Items\BlankContractItem_Recipe.cs" />
@@ -43,6 +44,7 @@
     <Compile Include="Items\ImpartmentContractItem_Interact.cs" />
     <Compile Include="Items\ImpartmentContractItem_Def.cs" />
     <Compile Include="Libraries\Helpers\Items\ItemIdentityHelpers.cs" />
+    <Compile Include="MyMod_Draw.cs" />
     <Compile Include="MyMod.cs" />
     <Compile Include="MyPlayer_Intrinsics.cs" />
     <Compile Include="MyPlayer.cs" />
@@ -78,6 +80,9 @@
     <Reference Include="System" />
     <Reference Include="Terraria">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\terraria\Terraria.exe</HintPath>
+    </Reference>
+    <Reference Include="Terraria.Libraries.ReLogic.ReLogic">
+      <HintPath>..\..\References\Libraries\Terraria.Libraries.ReLogic.ReLogic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
