@@ -1,5 +1,5 @@
-﻿using HamstarHelpers.Components.Network;
-using Intrinsics.Libraries.Helpers.Items;
+﻿using Intrinsics.Libraries.Helpers.Items;
+using Intrinsics.NetProtocols;
 using System;
 using Terraria;
 using Terraria.ModLoader;
@@ -32,6 +32,10 @@ namespace Intrinsics {
 			int itemId;
 			if( !ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
 				this.LoadIntrinsicItem( itemId );
+			}
+
+			if( Main.netMode == 1 ) {
+				IntrinsicsSyncProtocol.SyncFromMe();
 			}
 		}
 

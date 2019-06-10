@@ -3,6 +3,14 @@
 
 namespace Intrinsics.NetProtocols {
 	class ModSettingsProtocol : PacketProtocolRequestToServer {
+		public static void QuickRequest() {
+			PacketProtocolRequestToServer.QuickRequest<ModSettingsProtocol>( -1 );
+		}
+
+
+
+		////////////////
+
 		public IntrinsicsConfigData ModSettings;
 
 

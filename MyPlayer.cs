@@ -1,6 +1,7 @@
 ﻿using HamstarHelpers.Components.Network;
 using HamstarHelpers.Helpers.DebugHelpers;
 using Intrinsics.Items;
+using Intrinsics.Libraries.Helpers.Items;
 using Intrinsics.NetProtocols;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,8 @@ namespace Intrinsics {
 			int count = tag.GetInt( "item_count" );
 
 			for( int i=0; i<count; i++ ) {
-				this.IntrinsicItemUids.Add( tag.GetString("item_"+i) );
+				string itemUid = tag.GetString( "item_" + i );
+				this.ApplyIntrinsic( itemUid );
 			}
 		}
 
@@ -131,7 +133,8 @@ namespace Intrinsics {
 		}
 
 		private void OnConnectClient() {
-			PacketProtocolRequestToServer.QuickRequest<ModSettingsProtocol>( -1 );
+			IntrinsicsSyncProtocol.SyncFromMe();
+			ModSettingsProtocol.QuickRequest();
 		}
 
 		private void OnConnectServer() {

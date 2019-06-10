@@ -50,6 +50,7 @@
     <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
     <Compile Include="MyMod_Meta.cs" />
     <Compile Include="Libraries\Components\Protocol\Packet\Interfaces\SyncClient.cs" />
+    <Compile Include="NPCs\GhostWanderingNPC.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HamstarHelpers">
@@ -84,6 +85,8 @@
     <Content Include="description.txt" />
     <Content Include="Items\BlankContractItem.png" />
     <Content Include="Items\ImpartmentContractItem.png" />
+    <Content Include="NPCs\GhostWanderingNPC.png" />
+    <Content Include="NPCs\GhostWanderingNPC_Head.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />
