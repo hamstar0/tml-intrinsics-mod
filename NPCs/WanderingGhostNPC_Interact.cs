@@ -8,12 +8,12 @@ using Terraria.UI.Gamepad;
 
 
 namespace Intrinsics.NPCs {
-	partial class GhostWanderingNPC : ModNPC {
+	partial class WanderingGhostNPC : ModNPC {
 		internal static void UpdateTradingState() {
 			var mymod = IntrinsicsMod.Instance;
 			var plr = Main.player[ Main.myPlayer ];
 
-			mymod.IsTrading = mymod.IsTrading && !plr.dead && GhostWanderingNPC.CanTrade();
+			mymod.IsTrading = mymod.IsTrading && !plr.dead && WanderingGhostNPC.CanTrade();
 
 			if( !mymod.IsTrading ) {
 				Item item = mymod.TradeItem;
@@ -40,7 +40,7 @@ namespace Intrinsics.NPCs {
 
 			for( int i=0; i<Main.npc.Length; i++ ) {
 				NPC npc = Main.npc[i];
-				if( npc == null || !npc.active || npc.type != GhostWanderingNPC.MyType ) {
+				if( npc == null || !npc.active || npc.type != WanderingGhostNPC.MyType ) {
 					continue;
 				}
 

@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Intrinsics.NPCs {
 	[AutoloadHead]
-	partial class GhostWanderingNPC : ModNPC {
+	partial class WanderingGhostNPC : ModNPC {
 		public const string ChatText = "...";
 
 		////
@@ -34,7 +34,7 @@ namespace Intrinsics.NPCs {
 
 		public override void SetStaticDefaults() {
 			int npcType = this.npc.type;
-			GhostWanderingNPC.MyType = npcType;
+			WanderingGhostNPC.MyType = npcType;
 
 			this.DisplayName.SetDefault( "Ghost" );
 
@@ -103,7 +103,7 @@ namespace Intrinsics.NPCs {
 		////////////////
 
 		public override string GetChat() {
-			return GhostWanderingNPC.ChatText;
+			return WanderingGhostNPC.ChatText;
 		}
 
 

@@ -57,7 +57,7 @@ namespace Intrinsics {
 
 				if( Main.mouseLeftRelease && Main.mouseLeft ) {
 					ItemSlot.LeftClick( ref this.TradeItem, 0 );
-					GhostWanderingNPC.AttemptTrade( ref this.TradeItem );
+					WanderingGhostNPC.AttemptTrade( ref this.TradeItem );
 					Recipe.FindRecipes();
 				} else {
 					ItemSlot.RightClick( ref this.TradeItem, 0 );
