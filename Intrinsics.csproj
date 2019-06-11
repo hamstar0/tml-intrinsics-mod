@@ -36,10 +36,11 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="UI\UIIntrinsicsDialog.cs" />
     <Compile Include="Items\ContractTatterItem.cs" />
     <Compile Include="Items\ImpartmentContractItem_Draw.cs" />
     <Compile Include="Libraries\Helpers\NPCs\NPCHelpers.cs" />
-    <Compile Include="Logic.cs" />
+    <Compile Include="IntrinsicsLogic.cs" />
     <Compile Include="Items\BlankContractItem_Interact.cs" />
     <Compile Include="Items\BlankContractItem_Recipe.cs" />
     <Compile Include="Items\BlankContractItem_Def.cs" />

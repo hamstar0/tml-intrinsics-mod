@@ -1,5 +1,7 @@
 using HamstarHelpers.Helpers.DebugHelpers;
+using HamstarHelpers.Helpers.TmlHelpers;
 using Intrinsics.NPCs;
+using Intrinsics.UI;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -16,8 +18,13 @@ namespace Intrinsics {
 			if( idx == -1 ) { return; }
 
 			GameInterfaceDrawMethod tradeUI = () => {
+				var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
+
 				if( this.IsTrading ) {
 					this.DrawTradeUI();
+				}
+				if( myplayer.IntrinsicItemUids.Count > 0 ) {
+					UIIntrinsicsDialog.DrawButton();
 				}
 				return true;
 			};

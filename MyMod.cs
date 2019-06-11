@@ -1,6 +1,7 @@
 using HamstarHelpers.Components.Config;
 using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
 using Intrinsics.Items;
+using Intrinsics.UI;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -13,11 +14,14 @@ namespace Intrinsics {
 
 		////////////////
 		
-		public JsonConfig<IntrinsicsConfigData> ConfigJson { get; private set; }
-		public IntrinsicsConfigData Config => this.ConfigJson.Data;
-
 		internal Item TradeItem = new Item();
 		internal bool IsTrading = false;
+		internal UIIntrinsicsDialog IntrinsicsUI;
+
+		////////////////
+
+		public JsonConfig<IntrinsicsConfigData> ConfigJson { get; private set; }
+		public IntrinsicsConfigData Config => this.ConfigJson.Data;
 
 
 
@@ -39,6 +43,8 @@ namespace Intrinsics {
 			this.GetItem<ImpartmentContractItem>()?.LoadContent();
 
 			this.LoadConfig();
+
+			this.IntrinsicsUI = new UIIntrinsicsDialog();
 		}
 
 		private void LoadConfig() {

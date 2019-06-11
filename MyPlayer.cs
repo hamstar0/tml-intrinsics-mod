@@ -46,11 +46,11 @@ namespace Intrinsics {
 
 		////////////////
 
-		public ISet<string> IntrinsicItemUids = new HashSet<string>();
+		internal ISet<string> IntrinsicItemUids = new HashSet<string>();
 
-		private IDictionary<int, Item> IntrinsicArmItem = new Dictionary<int, Item>();
-		private IDictionary<int, Item> IntrinsicAccItem = new Dictionary<int, Item>();
-		private IDictionary<int, Item> IntrinsicBuffItem = new Dictionary<int, Item>();
+		internal IDictionary<int, Item> IntrinsicArmItem = new Dictionary<int, Item>();
+		internal IDictionary<int, Item> IntrinsicAccItem = new Dictionary<int, Item>();
+		internal IDictionary<int, Item> IntrinsicBuffItem = new Dictionary<int, Item>();
 
 		private Item PrevSelectedItem = null;
 
