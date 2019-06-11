@@ -22,6 +22,7 @@ namespace Intrinsics.Items {
 			this.item.value = Item.buyPrice( 1, 0, 0, 0 );
 			this.item.rare = ItemAttributeHelpers.HighestVanillaRarity;
 			this.item.material = true;
+			this.item.maxStack = 99;
 		}
 	}
 }

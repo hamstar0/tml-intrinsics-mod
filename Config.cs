@@ -21,7 +21,7 @@ namespace Intrinsics {
 		public int ControlsPositionY = 120;
 
 		public int BlankContractRecipeContractTattersNeeded = 3;
-		public string[] BlankContractAlternativeRecipeIngredients = new string[0];
+		public IDictionary<string, int> BlankContractAltRecipeIngredients = new Dictionary<string, int>();
 		//public string BlankContractRecipeStation = "";	//TODO
 
 		public float GhostNpcSpawnChance = 0.015f;

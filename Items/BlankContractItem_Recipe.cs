@@ -1,3 +1,4 @@
+using Intrinsics.Libraries.Helpers.Items;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,7 +13,7 @@ namespace Intrinsics.Items {
 				blankContractRecipe.AddRecipe();
 			}
 
-			if( mymod.Config.BlankContractAlternativeRecipeIngredients.Length > 0 ) {
+			if( mymod.Config.BlankContractAltRecipeIngredients.Count > 0 ) {
 				var otherBlankContractRecipe = new BlankContractAltRecipe( mymod, this );
 				otherBlankContractRecipe.AddRecipe();
 			}
@@ -24,7 +25,7 @@ namespace Intrinsics.Items {
 	class BlankContractRecipe : ModRecipe {
 		public BlankContractRecipe( IntrinsicsMod mymod, BlankContractItem myitem ) : base( mymod ) {
 			this.AddTile( TileID.WorkBenches );
-			this.AddIngredient( mymod.ItemType<ContractTatterItem>() );
+			this.AddIngredient( mymod.ItemType<ContractTatterItem>(), mymod.Config.BlankContractRecipeContractTattersNeeded );
 
 			this.SetResult( myitem );
 		}
@@ -40,8 +41,15 @@ namespace Intrinsics.Items {
 
 	class BlankContractAltRecipe : ModRecipe {
 		public BlankContractAltRecipe( IntrinsicsMod mymod, BlankContractItem myitem ) : base( mymod ) {
-			foreach( string itemUid in mymod.Config.BlankContractAlternativeRecipeIngredients ) {
-				this.AddIngredient( ItemID.DirtBlock, 10 );
+			int itemId;
+
+			foreach( var kv in mymod.Config.BlankContractAltRecipeIngredients ) {
+				string itemUid = kv.Key;
+				int count = kv.Value;
+
+				if( ItemIdentityHelpers.TryGetTypeByUid(itemUid, out itemId ) ) {
+					this.AddIngredient( itemId, count );
+				}
 			}
 
 			//if( !string.IsNullOrEmpty(mymod.Config.BlankContractRecipeStation) ) {
@@ -54,7 +62,7 @@ namespace Intrinsics.Items {
 
 		public override bool RecipeAvailable() {
 			var mymod = (IntrinsicsMod)this.mod;
-			return mymod.Config.BlankContractAlternativeRecipeIngredients.Length > 0;
+			return mymod.Config.BlankContractAltRecipeIngredients.Count > 0;
 		}
 	}
 }
