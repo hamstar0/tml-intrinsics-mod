@@ -49,7 +49,7 @@ namespace Intrinsics.Items {
 			Vector2 pos = this.item.position - Main.screenPosition;
 			int height = tex.Width;
 			var srcRect = new Rectangle( 0, this.Frame * height, tex.Width, height );
-			Color overlayColor = Color.Lerp( lightColor, Color.White, 0.5f );
+			Color overlayColor = Color.Lerp( lightColor, Color.White, 0.35f );
 
 			sb.Draw( tex, pos, new Rectangle(0, 0, tex.Width, tex.Height), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 1f );
 			sb.Draw( texOverlay, pos, srcRect, overlayColor, 0f, default(Vector2), scale, SpriteEffects.None, 1f );

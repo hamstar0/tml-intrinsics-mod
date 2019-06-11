@@ -40,13 +40,18 @@ namespace Intrinsics {
 			int y = this.Config.TradeUIPositionY >= 0 ?
 				this.Config.TradeUIPositionY :
 				Main.screenHeight - this.Config.TradeUIPositionY;
-			var pos = new Vector2( x + 50, y );
+
+			if( ModLoader.GetMod("ExtensibleInventory") != null ) {
+				y += 40;
+			}
+
+			var textPos = new Vector2( x + 64, y );
 			var color = Color.White * ( (float)Main.mouseTextColor / 255f );
 
 			float oldInvScale = Main.inventoryScale;
 			Main.inventoryScale = 1f;
 
-			ChatManager.DrawColorCodedStringWithShadow( Main.spriteBatch, Main.fontMouseText, text, pos, color, 0f, Vector2.Zero, Vector2.One, -1f, 2f );
+			ChatManager.DrawColorCodedStringWithShadow( Main.spriteBatch, Main.fontMouseText, text, textPos, color, 0f, Vector2.Zero, Vector2.One, -1f, 2f );
 
 			int maxX = (int)( x + ((float)Main.inventoryBackTexture.Width * Main.inventoryScale) );
 			int maxY = (int)( y + ((float)Main.inventoryBackTexture.Height * Main.inventoryScale) );
