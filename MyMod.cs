@@ -1,7 +1,7 @@
 using HamstarHelpers.Components.Config;
 using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
 using Intrinsics.Items;
-using Intrinsics.UI;
+using Intrinsics.UI.Elements;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,7 +16,7 @@ namespace Intrinsics {
 		
 		internal Item TradeItem = new Item();
 		internal bool IsTrading = false;
-		internal UIIntrinsicsDialog IntrinsicsUI;
+		internal UIIntrinsicsDialog IntrinsicsDialog;
 
 		////////////////
 
@@ -44,7 +44,10 @@ namespace Intrinsics {
 
 			this.LoadConfig();
 
-			this.IntrinsicsUI = new UIIntrinsicsDialog();
+			if( !Main.dedServ ) {
+				this.IntrinsicsDialog = new UIIntrinsicsDialog();
+				this.InitializeControlsUI();
+			}
 		}
 
 		private void LoadConfig() {

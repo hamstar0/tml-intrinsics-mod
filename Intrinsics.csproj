@@ -36,7 +36,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="UI\UIIntrinsicsDialog.cs" />
+    <Compile Include="UI\Elements\UIIntrinsicsDialog.cs" />
     <Compile Include="Items\ContractTatterItem.cs" />
     <Compile Include="Items\ImpartmentContractItem_Draw.cs" />
     <Compile Include="Libraries\Helpers\NPCs\NPCHelpers.cs" />
@@ -57,6 +57,7 @@
     <Compile Include="Libraries\Components\Protocol\Packet\Interfaces\SyncClient.cs" />
     <Compile Include="NPCs\WanderingGhostNPC_Interact.cs" />
     <Compile Include="NPCs\WanderingGhostNPC.cs" />
+    <Compile Include="UI\UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HamstarHelpers">
@@ -98,6 +99,7 @@
     <Content Include="Items\ImpartmentContractItem_Overlay.png" />
     <Content Include="NPCs\WanderingGhostNPC.png" />
     <Content Include="NPCs\WanderingGhostNPC_Head.png" />
+    <Content Include="UI\Button.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />

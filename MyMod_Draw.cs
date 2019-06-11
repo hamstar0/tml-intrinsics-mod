@@ -13,18 +13,36 @@ using Terraria.UI.Chat;
 
 namespace Intrinsics {
 	partial class IntrinsicsMod : Mod {
+		private UserInterface ControlsUIMngr;
+		internal IntrinsicsControlsUI ControlsUI;
+
+
+
+		////////////////
+
+		private void InitializeControlsUI() {
+			this.ControlsUIMngr = new UserInterface();
+			this.ControlsUI = new IntrinsicsControlsUI();
+			this.ControlsUIMngr.SetState( this.ControlsUI );
+		}
+
+
+		////////////////
+
 		public override void ModifyInterfaceLayers( List<GameInterfaceLayer> layers ) {
 			int idx = layers.FindIndex( layer => layer.Name.Equals( "Vanilla: Mouse Text" ) );
 			if( idx == -1 ) { return; }
 
 			GameInterfaceDrawMethod tradeUI = () => {
+				var mymod = IntrinsicsMod.Instance;
 				var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
 
-				if( this.IsTrading ) {
-					this.DrawTradeUI();
+				if( mymod.IsTrading ) {
+					mymod.DrawTradeUI();
 				}
 				if( myplayer.IntrinsicItemUids.Count > 0 ) {
-					UIIntrinsicsDialog.DrawButton();
+					mymod.ControlsUIMngr?.Update( Main._drawInterfaceGameTime );
+					mymod.ControlsUI?.Draw( Main.spriteBatch );
 				}
 				return true;
 			};
@@ -43,10 +61,10 @@ namespace Intrinsics {
 
 			int x = this.Config.TradeUIPositionX >= 0 ?
 				this.Config.TradeUIPositionX :
-				Main.screenWidth - this.Config.TradeUIPositionX;
+				Main.screenWidth + this.Config.TradeUIPositionX;
 			int y = this.Config.TradeUIPositionY >= 0 ?
 				this.Config.TradeUIPositionY :
-				Main.screenHeight - this.Config.TradeUIPositionY;
+				Main.screenHeight + this.Config.TradeUIPositionY;
 
 			if( ModLoader.GetMod("ExtensibleInventory") != null ) {
 				y += 40;
