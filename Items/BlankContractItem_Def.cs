@@ -1,3 +1,4 @@
+using HamstarHelpers.Helpers.ItemHelpers;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -25,16 +26,15 @@ namespace Intrinsics.Items {
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Blank Contract" );
 			this.Tooltip.SetDefault( "Write your own destiny.\n"+
-				"Select and drop an item onto this contract to bind it, if valid.\n" +
-				"Agreeing to the contract permanently bestows its bound item's traits."
+				"Drop a valid item onto this contract to bind it."
 			);
 		}
 
 		public override void SetDefaults() {
-			this.item.width = 24;
-			this.item.height = 24;
-			this.item.value = 10000;
-			this.item.rare = 2;
+			this.item.width = 32;
+			this.item.height = 32;
+			this.item.value = Item.buyPrice( 1, 0, 0, 0 );
+			this.item.rare = ItemAttributeHelpers.HighestVanillaRarity;
 			this.item.consumable = true;
 			this.item.useStyle = 4;
 			this.item.useTime = 30;

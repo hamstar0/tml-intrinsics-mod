@@ -17,7 +17,7 @@ namespace Intrinsics.Items {
 		}
 
 		public override void SetDefaults() {
-			this.item.width = 24;
+			this.item.width = 32;
 			this.item.height = 16;
 			this.item.value = Item.buyPrice( 1, 0, 0, 0 );
 			this.item.rare = ItemAttributeHelpers.HighestVanillaRarity;

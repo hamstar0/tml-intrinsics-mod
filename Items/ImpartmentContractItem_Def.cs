@@ -1,5 +1,4 @@
 using HamstarHelpers.Helpers.ItemHelpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +10,12 @@ using Terraria.ModLoader.IO;
 
 namespace Intrinsics.Items {
 	public partial class ImpartmentContractItem : ModItem {
+		private static Texture2D Overlay = null;
+
+
+
+		////////////////
+
 		public static int Create( Player player, ISet<string> itemUids ) {
 			int itemIdx = ItemHelpers.CreateItem( player.Center, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>(), 1, 24, 24 );
 			var myitem = Main.item[itemIdx].modItem as ImpartmentContractItem;
@@ -28,7 +33,7 @@ namespace Intrinsics.Items {
 
 		////////////////
 
-		private ISet<string> IntrinsicItemUids;
+		private ISet<string> IntrinsicItemUids = new HashSet<string>();
 
 
 
@@ -39,6 +44,16 @@ namespace Intrinsics.Items {
 
 
 		////////////////
+
+		internal void LoadContent() {
+			ImpartmentContractItem.Overlay = ModLoader.GetTexture( this.Texture + "_Overlay" );
+		}
+
+		internal void UnloadContent() {
+			ImpartmentContractItem.Overlay = null;
+		}
+
+		////
 
 		public override ModItem Clone() {
 			var clone = (ImpartmentContractItem)base.Clone();
@@ -105,36 +120,15 @@ namespace Intrinsics.Items {
 		}
 
 		public override void SetDefaults() {
-			this.item.width = 24;
-			this.item.height = 24;
-			this.item.value = 10000;
-			this.item.rare = 2;
+			this.item.width = 32;
+			this.item.height = 32;
+			this.item.value = Item.buyPrice( 1, 0, 0, 0 );
+			this.item.rare = ItemAttributeHelpers.HighestVanillaRarity;
 			this.item.consumable = true;
 			this.item.useStyle = 4;
 			this.item.useTime = 30;
 			this.item.useAnimation = 30;
 			this.item.UseSound = SoundID.Item4;
-		}
-
-
-		////////////////
-
-		private int Frame = 0;
-
-		public override bool PreDrawInInventory( SpriteBatch sb, Vector2 pos, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale ) {
-			var mymod = IntrinsicsMod.Instance;
-			Texture2D tex = ModLoader.GetTexture( this.Texture );
-
-			int height = tex.Width;
-			var srcRect = new Rectangle( 0, this.Frame * height, tex.Width, height );
-
-			sb.Draw( tex, pos, srcRect, drawColor, 0f, default(Vector2), scale, SpriteEffects.None, 1f );
-
-			if( ++this.Frame >= 8 ) {
-				this.Frame = 0;
-			}
-
-			return false;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 using HamstarHelpers.Components.Config;
 using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
+using Intrinsics.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -35,6 +36,8 @@ namespace Intrinsics {
 		public override void Load() {
 			IntrinsicsMod.Instance = this;
 
+			this.GetItem<ImpartmentContractItem>()?.LoadContent();
+
 			this.LoadConfig();
 		}
 
@@ -52,6 +55,7 @@ namespace Intrinsics {
 		}
 
 		public override void Unload() {
+			this.GetItem<ImpartmentContractItem>()?.UnloadContent();
 			IntrinsicsMod.Instance = null;
 		}
 
