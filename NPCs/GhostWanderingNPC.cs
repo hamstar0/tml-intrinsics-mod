@@ -3,11 +3,9 @@ using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Helpers.WorldHelpers;
 using Intrinsics.Libraries.Helpers.NPCs;
 using Microsoft.Xna.Framework;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Gamepad;
 
 
 namespace Intrinsics.NPCs {
@@ -22,28 +20,7 @@ namespace Intrinsics.NPCs {
 
 
 		////////////////
-
-		public static bool CanTrade() {
-			var mymod = IntrinsicsMod.Instance;
-
-			for( int i=0; i<Main.npc.Length; i++ ) {
-				NPC npc = Main.npc[i];
-				if( npc == null || !npc.active || npc.type != GhostWanderingNPC.MyType ) {
-					continue;
-				}
-
-				if( Vector2.DistanceSquared(Main.LocalPlayer.position, npc.position) < 9216 ) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-
-
-		////////////////
-
+		
 		public override string Texture => "Intrinsics/NPCs/GhostWanderingNPC";
 
 
@@ -158,32 +135,6 @@ namespace Intrinsics.NPCs {
 		public override Color? GetAlpha( Color drawColor ) {
 			var color = Color.Lerp(new Color( 128, 255, 255 ), drawColor, 0.5f) * 0.35f;
 			return color;
-		}
-
-
-		////////////////
-
-		public override void OnChatButtonClicked( bool firstButton, ref bool shop ) {
-			if( firstButton ) {
-				var mymod = (IntrinsicsMod)this.mod;
-				mymod.IsTrading = true;
-
-				Main.playerInventory = true;
-				Main.npcChatText = "";
-				Main.PlaySound( 12, -1, -1, 1, 1f, 0f );
-				UILinkPointNavigator.GoToDefaultPage( 0 );
-			}
-		}
-
-		public override void AI() {
-			var mymod = (IntrinsicsMod)this.mod;
-
-			if( mymod.IsTrading ) {
-				if( this.npc.ai[0] == 1f ) {
-					this.npc.ai[0] = 0f;
-				}
-			}
-//DebugHelpers.Print( "ghostai_"+npc.whoAmI, string.Join(", ", npc.ai.Select(a=>a.ToString("N2"))), 20 );
 		}
 	}
 }

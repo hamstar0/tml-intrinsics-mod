@@ -149,7 +149,7 @@ namespace Intrinsics {
 			//if( plr.dead ) { return; }
 
 			if( plr.whoAmI == Main.myPlayer ) {
-				mymod.IsTrading = mymod.IsTrading && GhostWanderingNPC.CanTrade();
+				GhostWanderingNPC.UpdateTradingState();
 			}
 
 			this.UpdateIntrinsicBuffs();
