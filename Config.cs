@@ -17,7 +17,7 @@ namespace Intrinsics {
 
 		public bool DebugModeInfo = false;
 
-		public int ControlsPositionX = -296;
+		public int ControlsPositionX = -232;
 		public int ControlsPositionY = 120;
 
 		public int BlankContractRecipeContractTattersNeeded = 3;
