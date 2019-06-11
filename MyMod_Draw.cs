@@ -40,9 +40,11 @@ namespace Intrinsics {
 				if( mymod.IsTrading ) {
 					mymod.DrawTradeUI();
 				}
-				if( myplayer.IntrinsicItemUids.Count > 0 ) {
+				if( Main.playerInventory ) {
+					//if( myplayer.IntrinsicItemUids.Count > 0 ) {
 					mymod.ControlsUIMngr?.Update( Main._drawInterfaceGameTime );
 					mymod.ControlsUI?.Draw( Main.spriteBatch );
+					//}
 				}
 				return true;
 			};

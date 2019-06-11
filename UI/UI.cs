@@ -1,4 +1,5 @@
 ﻿using HamstarHelpers.Helpers.DebugHelpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -26,8 +27,6 @@ namespace Intrinsics.UI {
 		////////////////
 
 		public override void OnInitialize() {
-			var mymod = IntrinsicsMod.Instance;
-
 			this.Label = new UIText( "Show active intrinsics" );
 
 			this.ButtonOpenDialog = new UIImageButton( this.ButtonPageAddTex );
@@ -37,6 +36,28 @@ namespace Intrinsics.UI {
 
 			////
 
+			this.UpdateLayout();
+
+			////
+
+			base.Append( this.Label );
+			base.Append( this.ButtonOpenDialog );
+		}
+
+
+		////////////////
+
+		public override void Update( GameTime gameTime ) {
+			this.UpdateLayout();
+			base.Update( gameTime );
+		}
+
+
+		////////////////
+
+		public void UpdateLayout() {
+			var mymod = IntrinsicsMod.Instance;
+
 			int x = mymod.Config.ControlsPositionX >= 0 ?
 				mymod.Config.ControlsPositionX :
 				Main.screenWidth + mymod.Config.ControlsPositionX;
@@ -44,15 +65,12 @@ namespace Intrinsics.UI {
 				mymod.Config.ControlsPositionY :
 				Main.screenHeight + mymod.Config.ControlsPositionY;
 
-			this.Label.Left.Set( x, 0f );
-			this.Label.Top.Set( y, 0f );
 			this.ButtonOpenDialog.Left.Set( x, 0f );
-			this.ButtonOpenDialog.Top.Set( y + 32f, 0f );
+			this.ButtonOpenDialog.Top.Set( y, 0f );
+			this.Label.Left.Set( x + 32, 0f );
+			this.Label.Top.Set( y, 0f );
 
-			////
-
-			base.Append( this.Label );
-			base.Append( this.ButtonOpenDialog );
+			this.Recalculate();
 		}
 	}
 }
