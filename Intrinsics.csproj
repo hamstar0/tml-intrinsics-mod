@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Items\ContractTatterItem.cs" />
     <Compile Include="Libraries\Helpers\NPCs\NPCHelpers.cs" />
     <Compile Include="Logic.cs" />
     <Compile Include="Items\BlankContractItem_Interact.cs" />
@@ -89,6 +90,7 @@
   <ItemGroup>
     <Content Include="build.txt" />
     <Content Include="description.txt" />
+    <Content Include="Items\ContractTatterItem.png" />
     <Content Include="Items\BlankContractItem.png" />
     <Content Include="Items\ImpartmentContractItem.png" />
     <Content Include="NPCs\WanderingGhostNPC.png" />
