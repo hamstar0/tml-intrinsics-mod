@@ -20,7 +20,28 @@ namespace Intrinsics.NPCs {
 
 
 		////////////////
-		
+
+		public static NPC GetNearestGhost( Player player ) {
+			var mymod = IntrinsicsMod.Instance;
+
+			for( int i = 0; i < Main.npc.Length; i++ ) {
+				NPC npc = Main.npc[i];
+				if( npc == null || !npc.active || npc.type != WanderingGhostNPC.MyType ) {
+					continue;
+				}
+
+				if( Vector2.DistanceSquared( player.position, npc.position ) < 9216 ) {
+					return npc;
+				}
+			}
+
+			return null;
+		}
+
+
+
+		////////////////
+
 		public override string Texture => "Intrinsics/NPCs/GhostWanderingNPC";
 
 

@@ -1,6 +1,6 @@
 using HamstarHelpers.Components.Errors;
 using HamstarHelpers.Helpers.DebugHelpers;
-using Microsoft.Xna.Framework;
+using HamstarHelpers.Helpers.ItemHelpers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,17 +36,21 @@ namespace Intrinsics.NPCs {
 		////
 
 		public static bool CanTrade() {
+			return WanderingGhostNPC.GetNearestGhost( Main.LocalPlayer ) != null;
+		}
+
+		public static bool AttemptTrade( ref Item tradeItem ) {
 			var mymod = IntrinsicsMod.Instance;
+			string itemUid = ItemIdentityHelpers.GetProperUniqueId( tradeItem.type );
 
-			for( int i=0; i<Main.npc.Length; i++ ) {
-				NPC npc = Main.npc[i];
-				if( npc == null || !npc.active || npc.type != WanderingGhostNPC.MyType ) {
-					continue;
-				}
+			if( mymod.Config.TradeItemContractTatters.ContainsKey(itemUid) ) {
+				int tatterNum = mymod.Config.TradeItemContractTatters[itemUid];
+				NPC npc = WanderingGhostNPC.GetNearestGhost( Main.LocalPlayer );
 
-				if( Vector2.DistanceSquared(Main.LocalPlayer.position, npc.position) < 9216 ) {
-					return true;
-				}
+				ItemHelpers.CreateItem( npc.position, mymod.ItemType<ContractTatterItem>(), tatterNum, 16, 16 );
+				ItemHelpers.ReduceStack( tradeItem, 1 );
+
+				return true;
 			}
 
 			return false;
