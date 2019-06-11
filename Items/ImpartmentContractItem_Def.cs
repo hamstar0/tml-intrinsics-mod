@@ -1,4 +1,6 @@
 using HamstarHelpers.Helpers.ItemHelpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -11,7 +13,7 @@ namespace Intrinsics.Items {
 	public partial class ImpartmentContractItem : ModItem {
 		public static int Create( Player player, ISet<string> itemUids ) {
 			int itemIdx = ItemHelpers.CreateItem( player.Center, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>(), 1, 24, 24 );
-			var myitem = Main.item[ itemIdx ].modItem as ImpartmentContractItem;
+			var myitem = Main.item[itemIdx].modItem as ImpartmentContractItem;
 
 			if( myitem != null ) {
 				myitem.IntrinsicItemUids = itemUids;
@@ -85,7 +87,7 @@ namespace Intrinsics.Items {
 
 		public override void NetSend( BinaryWriter writer ) {
 			writer.Write( (int)this.IntrinsicItemUids.Count );
-			
+
 			foreach( string itemUid in this.IntrinsicItemUids ) {
 				writer.Write( itemUid );
 			}
@@ -96,8 +98,8 @@ namespace Intrinsics.Items {
 
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Impartment Contract" );
-			this.Tooltip.SetDefault( "This contract will impart intrinsic effects when agreed to.\n"+
-				"Intrinsic impartments are permanent.\n"+
+			this.Tooltip.SetDefault( "This contract will impart intrinsic effects when agreed to.\n" +
+				"Intrinsic impartments are permanent.\n" +
 				"Sometimes more than one impartment may occur, good or bad."
 			);
 		}
@@ -112,6 +114,27 @@ namespace Intrinsics.Items {
 			this.item.useTime = 30;
 			this.item.useAnimation = 30;
 			this.item.UseSound = SoundID.Item4;
+		}
+
+
+		////////////////
+
+		private int Frame = 0;
+
+		public override bool PreDrawInInventory( SpriteBatch sb, Vector2 pos, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale ) {
+			var mymod = IntrinsicsMod.Instance;
+			Texture2D tex = ModLoader.GetTexture( this.Texture );
+
+			int height = tex.Width;
+			var srcRect = new Rectangle( 0, this.Frame * height, tex.Width, height );
+
+			sb.Draw( tex, pos, srcRect, drawColor, 0f, default(Vector2), scale, SpriteEffects.None, 1f );
+
+			if( ++this.Frame >= 8 ) {
+				this.Frame = 0;
+			}
+
+			return false;
 		}
 	}
 }

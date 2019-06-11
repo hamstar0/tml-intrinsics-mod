@@ -1,6 +1,7 @@
 using HamstarHelpers.Components.Errors;
 using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Helpers.ItemHelpers;
+using Intrinsics.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

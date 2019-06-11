@@ -33,7 +33,7 @@ namespace Intrinsics {
 		////////////////
 
 		public void SetDefaults() {
-			string n( int itemId ) => ItemIdentityHelpers.GetProperUniqueId( itemId );
+			Func<int, string> n = ( int itemId ) => ItemIdentityHelpers.GetProperUniqueId( itemId );
 			
 			 this.TradeItemContractTatters[ n(ItemID.GPS) ] = 1;
 			 this.TradeItemContractTatters[ n(ItemID.REK) ] = 1;

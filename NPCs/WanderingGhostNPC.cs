@@ -42,7 +42,7 @@ namespace Intrinsics.NPCs {
 
 		////////////////
 
-		public override string Texture => "Intrinsics/NPCs/GhostWanderingNPC";
+		public override string Texture => "Intrinsics/NPCs/WanderingGhostNPC";
 
 
 
