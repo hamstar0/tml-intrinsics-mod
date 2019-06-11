@@ -6,22 +6,55 @@ namespace Intrinsics.Items {
 	public partial class BlankContractItem : ModItem {
 		public override void AddRecipes() {
 			var mymod = (IntrinsicsMod)this.mod;
-			if( mymod.Config.BlankContractRecipeIngredients.Length == 0 ) {
-				return;
+
+			if( mymod.Config.BlankContractRecipeContractTattersNeeded > 0 ) {
+				var blankContractRecipe = new BlankContractRecipe( mymod, this );
+				blankContractRecipe.AddRecipe();
 			}
 
-			ModRecipe recipe = new ModRecipe( mod );
+			if( mymod.Config.BlankContractAlternativeRecipeIngredients.Length > 0 ) {
+				var otherBlankContractRecipe = new BlankContractAltRecipe( mymod, this );
+				otherBlankContractRecipe.AddRecipe();
+			}
+		}
+	}
 
-			foreach( string itemUid in mymod.Config.BlankContractRecipeIngredients ) {
-				recipe.AddIngredient( ItemID.DirtBlock, 10 );
+
+
+	class BlankContractRecipe : ModRecipe {
+		public BlankContractRecipe( IntrinsicsMod mymod, BlankContractItem myitem ) : base( mymod ) {
+			this.AddTile( TileID.WorkBenches );
+			this.AddIngredient( mymod.ItemType<ContractTatterItem>() );
+
+			this.SetResult( myitem );
+		}
+
+
+		public override bool RecipeAvailable() {
+			var mymod = (IntrinsicsMod)this.mod;
+			return mymod.Config.BlankContractRecipeContractTattersNeeded > 0;
+		}
+	}
+
+
+
+	class BlankContractAltRecipe : ModRecipe {
+		public BlankContractAltRecipe( IntrinsicsMod mymod, BlankContractItem myitem ) : base( mymod ) {
+			foreach( string itemUid in mymod.Config.BlankContractAlternativeRecipeIngredients ) {
+				this.AddIngredient( ItemID.DirtBlock, 10 );
 			}
 
 			//if( !string.IsNullOrEmpty(mymod.Config.BlankContractRecipeStation) ) {
-			//	recipe.AddTile( TileIdentityHelpers.GetVanillaTileName mymod.Config.BlankContractRecipeStation );
+			//	this.AddTile( TileIdentityHelpers.GetVanillaTileName mymod.Config.BlankContractRecipeStation );
 			//}
 
-			recipe.SetResult( this );
-			recipe.AddRecipe();
+			this.SetResult( myitem );
+		}
+
+
+		public override bool RecipeAvailable() {
+			var mymod = (IntrinsicsMod)this.mod;
+			return mymod.Config.BlankContractAlternativeRecipeIngredients.Length > 0;
 		}
 	}
 }

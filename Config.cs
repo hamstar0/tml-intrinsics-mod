@@ -17,7 +17,8 @@ namespace Intrinsics {
 
 		public bool DebugModeInfo = false;
 
-		public string[] BlankContractRecipeIngredients = new string[0];
+		public int BlankContractRecipeContractTattersNeeded = 3;
+		public string[] BlankContractAlternativeRecipeIngredients = new string[0];
 		//public string BlankContractRecipeStation = "";	//TODO
 
 		public float GhostNpcSpawnChance = 0.015f;
