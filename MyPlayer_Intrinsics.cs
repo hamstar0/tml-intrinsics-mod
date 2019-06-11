@@ -28,9 +28,9 @@ namespace Intrinsics {
 
 		public void ApplyIntrinsic( string itemUid ) {
 			this.IntrinsicItemUids.Add( itemUid );
-
+			
 			int itemId;
-			if( !ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
+			if( ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
 				this.LoadIntrinsicItem( itemId );
 			}
 
