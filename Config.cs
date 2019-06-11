@@ -19,6 +19,9 @@ namespace Intrinsics {
 
 		public float GhostNpcSpawnChance = 0.015f;
 
+		public int TradeUIPositionX = 64;
+		public int TradeUIPositionY = 256;
+
 
 
 		////////////////

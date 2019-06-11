@@ -16,7 +16,6 @@ namespace Intrinsics {
 
 			GameInterfaceDrawMethod tradeUI = () => {
 				if( this.IsTrading ) {
-DebugHelpers.Print("blah", "", 20);
 					this.DrawTradeUI();
 				}
 				return true;
@@ -32,32 +31,42 @@ DebugHelpers.Print("blah", "", 20);
 		////////////////
 
 		private void DrawTradeUI() {
-			string text = "blah";
-			int context = 23;
-			int x = 40;
-			int y = 40;
+			string text = "Give a rare or hard-to-get item";
+
+			int x = this.Config.TradeUIPositionX >= 0 ?
+				this.Config.TradeUIPositionX :
+				Main.screenWidth - this.Config.TradeUIPositionX;
+			int y = this.Config.TradeUIPositionY >= 0 ?
+				this.Config.TradeUIPositionY :
+				Main.screenHeight - this.Config.TradeUIPositionY;
 			var pos = new Vector2( x + 50, y );
 			var color = Color.White * ( (float)Main.mouseTextColor / 255f );
 
+			float oldInvScale = Main.inventoryScale;
+			Main.inventoryScale = 1f;
+
 			ChatManager.DrawColorCodedStringWithShadow( Main.spriteBatch, Main.fontMouseText, text, pos, color, 0f, Vector2.Zero, Vector2.One, -1f, 2f );
 
-			int maxX = (int)( (float)( x + Main.inventoryBackTexture.Width ) * Main.inventoryScale );
-			int maxY = (int)( (float)( y + Main.inventoryBackTexture.Height ) * Main.inventoryScale );
-
-			if( Main.mouseX >= x && Main.mouseX <= maxX && Main.mouseY >= y && (float)Main.mouseY <= maxY && !PlayerInput.IgnoreMouseInterface ) {
+			int maxX = (int)( x + ((float)Main.inventoryBackTexture.Width * Main.inventoryScale) );
+			int maxY = (int)( y + ((float)Main.inventoryBackTexture.Height * Main.inventoryScale) );
+			
+			if( Main.mouseX >= x && Main.mouseX <= maxX && Main.mouseY >= y && Main.mouseY <= maxY && !PlayerInput.IgnoreMouseInterface ) {
 				Main.LocalPlayer.mouseInterface = true;
 				Main.craftingHide = true;
 
 				if( Main.mouseLeftRelease && Main.mouseLeft ) {
-					ItemSlot.LeftClick( ref this.TradeItem, context );
+					ItemSlot.LeftClick( ref this.TradeItem, 0 );
+Main.NewText("! "+this.TradeItem);
 					Recipe.FindRecipes();
 				} else {
-					ItemSlot.RightClick( ref this.TradeItem, context );
+					ItemSlot.RightClick( ref this.TradeItem, 0 );
 				}
-				ItemSlot.MouseHover( ref this.TradeItem, context );
+				ItemSlot.MouseHover( ref this.TradeItem, 0 );
 			}
 
-			ItemSlot.Draw( Main.spriteBatch, ref this.TradeItem, context, new Vector2(x, y), default(Color) );
+			ItemSlot.Draw( Main.spriteBatch, ref this.TradeItem, ItemSlot.Context.GuideItem, new Vector2(x, y), default(Color) );
+
+			Main.inventoryScale = oldInvScale;
 		}
 	}
 }
