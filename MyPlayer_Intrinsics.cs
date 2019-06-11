@@ -1,4 +1,4 @@
-﻿using Intrinsics.Libraries.Helpers.Items;
+﻿using HamstarHelpers.Helpers.ItemHelpers;
 using Intrinsics.NetProtocols;
 using System;
 using Terraria;
@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Intrinsics {
 	partial class IntrinsicsPlayer : ModPlayer {
-		private void LoadIntrinsicItem( int itemId ) {
+		private Item LoadIntrinsicItem( int itemId ) {
 			var item = new Item();
 			item.SetDefaults( itemId );
 
@@ -22,6 +22,8 @@ namespace Intrinsics {
 				this.IntrinsicBuffItem[itemId] = item;
 				break;
 			}
+
+			return item;
 		}
 		
 		/////
@@ -30,8 +32,11 @@ namespace Intrinsics {
 			this.IntrinsicItemUids.Add( itemUid );
 			
 			int itemId;
-			if( ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
-				this.LoadIntrinsicItem( itemId );
+			if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
+				Item item = this.LoadIntrinsicItem( itemId );
+				string colorHex = ItemAttributeHelpers.RarityColor[ item.rare ].Hex3();
+
+				Main.NewText( "The deal is made. Imparting [c/" + colorHex + ":"+item.HoverName+"]..." );
 			}
 
 			if( Main.netMode == 1 ) {

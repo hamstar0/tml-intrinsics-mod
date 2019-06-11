@@ -113,9 +113,11 @@ namespace Intrinsics.Items {
 
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Impartment Contract" );
-			this.Tooltip.SetDefault( "This contract will impart intrinsic effects when agreed to.\n" +
-				"Intrinsic impartments are permanent.\n" +
-				"Sometimes more than one impartment may occur, good or bad."
+			this.Tooltip.SetDefault( "This contract will impart intrinsic effects when used.\n" +
+				"The item(s) used to make this contract define the intrinsic(s) applied.\n" +
+				"An intrinsic works exactly like equipping or using an item, but implicitly.\n" +
+				"Intrinsic impartments are permanent."
+			//"Sometimes more than one impartment may occur, good or bad."
 			);
 		}
 
@@ -129,6 +131,29 @@ namespace Intrinsics.Items {
 			this.item.useTime = 30;
 			this.item.useAnimation = 30;
 			this.item.UseSound = SoundID.Item4;
+		}
+
+
+		////////////////
+
+		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
+			var topTip = new TooltipLine( this.mod, "intrinsics", "This contract imparts intrinsics from the following items:" );
+			tooltips.Add( topTip );
+
+			int i = 0;
+			foreach( string itemUid in this.IntrinsicItemUids ) {
+				int itemId;
+				if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid(itemUid, out itemId) ) {
+					var item = new Item();
+					item.SetDefaults( itemId, true );
+
+					var tip = new TooltipLine( this.mod, "intrinsic_" + i, "  " + item.HoverName );
+					tip.overrideColor = ItemAttributeHelpers.RarityColor[ item.rare ];
+					tooltips.Add( tip );
+
+					i++;
+				}
+			}
 		}
 	}
 }

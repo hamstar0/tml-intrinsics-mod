@@ -28,8 +28,11 @@ namespace Intrinsics.UI {
 
 		public override void OnInitialize() {
 			this.Label = new UIText( "Show active intrinsics" );
-
 			this.ButtonOpenDialog = new UIImageButton( this.ButtonPageAddTex );
+
+			this.Label.OnClick += ( evt, elem ) => {
+				IntrinsicsMod.Instance.IntrinsicsDialog.Open();
+			};
 			this.ButtonOpenDialog.OnClick += ( evt, elem ) => {
 				IntrinsicsMod.Instance.IntrinsicsDialog.Open();
 			};
@@ -67,8 +70,8 @@ namespace Intrinsics.UI {
 
 			this.ButtonOpenDialog.Left.Set( x, 0f );
 			this.ButtonOpenDialog.Top.Set( y, 0f );
-			this.Label.Left.Set( x + 32, 0f );
-			this.Label.Top.Set( y, 0f );
+			this.Label.Left.Set( x + 24f, 0f );
+			this.Label.Top.Set( y + 4f, 0f );
 
 			this.Recalculate();
 		}

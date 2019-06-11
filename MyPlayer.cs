@@ -84,6 +84,7 @@ namespace Intrinsics {
 			int i = 0;
 			foreach( string itemUid in this.IntrinsicItemUids ) {
 				tag[ "item_" + i ] = itemUid;
+				i++;
 			}
 
 			return tag;
