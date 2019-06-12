@@ -83,6 +83,7 @@ namespace Intrinsics {
 		private void UpdateIntrinsicEquips() {
 			bool _ = false;
 			foreach( Item item in this.IntrinsicAccItem.Values ) {
+				this.player.VanillaUpdateEquip( item );
 				this.player.VanillaUpdateAccessory( this.player.whoAmI, item, false, ref _, ref _, ref _ );
 			}
 			foreach( Item item in this.IntrinsicArmItem.Values ) {
