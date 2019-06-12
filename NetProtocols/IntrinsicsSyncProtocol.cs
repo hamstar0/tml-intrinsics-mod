@@ -11,6 +11,15 @@ namespace Intrinsics.NetProtocols {
 		public static void SyncFromMe() {
 			PacketProtocolSyncClient.SyncFromMe<IntrinsicsSyncProtocol>();
 		}
+		
+		public static void SyncFromOther( int playerWho ) {
+			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.player[playerWho] );
+			var protocol = new IntrinsicsSyncProtocol();
+
+			protocol.ItemUids = myplayer.IntrinsicItemUids.ToArray();
+			protocol.SendToServer( true );
+		}
+
 		public static void SyncToMe() {
 			PacketProtocolSyncClient.SyncToMe<IntrinsicsSyncProtocol>( -1 );
 		}

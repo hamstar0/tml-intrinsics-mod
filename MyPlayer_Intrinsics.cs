@@ -25,22 +25,44 @@ namespace Intrinsics {
 
 			return item;
 		}
-		
+
 		/////
 
 		public void ApplyIntrinsic( string itemUid ) {
 			this.IntrinsicItemUids.Add( itemUid );
-			
+
 			int itemId;
 			if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
 				Item item = this.LoadIntrinsicItem( itemId );
-				string colorHex = ItemAttributeHelpers.RarityColor[ item.rare ].Hex3();
+				string colorHex = ItemAttributeHelpers.RarityColor[item.rare].Hex3();
 
-				Main.NewText( "The deal is made. Imparting [c/" + colorHex + ":"+item.HoverName+"]..." );
+				Main.NewText( "The deal is made. Imparting [c/" + colorHex + ":" + item.HoverName + "]..." );
 			}
 
 			if( Main.netMode == 1 ) {
-				IntrinsicsSyncProtocol.SyncFromMe();
+				if( this.player.whoAmI == Main.myPlayer ) {
+					IntrinsicsSyncProtocol.SyncFromMe();
+				} else {
+					IntrinsicsSyncProtocol.SyncFromOther( this.player.whoAmI );
+				}
+			}
+		}
+
+
+		public void RemoveIntrinsic( string itemUid ) {
+			this.IntrinsicItemUids.Remove( itemUid );
+
+			int itemId;
+			if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid(itemUid, out itemId) ) {
+				if( this.IntrinsicBuffItem.ContainsKey(itemId) ) {
+					this.IntrinsicBuffItem.Remove( itemId );
+				}
+				if( this.IntrinsicArmItem.ContainsKey(itemId) ) {
+					this.IntrinsicArmItem.Remove( itemId );
+				}
+				if( this.IntrinsicAccItem.ContainsKey(itemId) ) {
+					this.IntrinsicAccItem.Remove( itemId );
+				}
 			}
 		}
 

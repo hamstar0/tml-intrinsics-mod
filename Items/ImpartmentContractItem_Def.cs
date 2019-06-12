@@ -1,4 +1,5 @@
 using HamstarHelpers.Helpers.ItemHelpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
@@ -16,8 +17,8 @@ namespace Intrinsics.Items {
 
 		////////////////
 
-		public static int Create( Player player, ISet<string> itemUids ) {
-			int itemIdx = ItemHelpers.CreateItem( player.Center, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>(), 1, 24, 24 );
+		public static int Create( Player player, Vector2 position, ISet<string> itemUids ) {
+			int itemIdx = ItemHelpers.CreateItem( position, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>(), 1, 24, 24 );
 			var myitem = Main.item[itemIdx].modItem as ImpartmentContractItem;
 
 			if( myitem != null ) {

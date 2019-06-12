@@ -35,6 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
+    <Compile Include="Commands\RemoveIntrinsicCommand.cs" />
+    <Compile Include="Commands\CreateContractCommand.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="UI\Elements\UIIntrinsicsDialog.cs" />
     <Compile Include="Items\ContractTatterItem.cs" />
@@ -93,6 +95,7 @@
   <ItemGroup>
     <Content Include="build.txt" />
     <Content Include="description.txt" />
+    <Content Include="icon.png" />
     <Content Include="Items\ContractTatterItem.png" />
     <Content Include="Items\BlankContractItem.png" />
     <Content Include="Items\ImpartmentContractItem.png" />
