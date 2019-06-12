@@ -147,11 +147,13 @@ namespace Intrinsics.UI.Elements {
 		private UIElement GetItemIntrinsic( Item item ) {
 			var elem = new UIPanel();
 			elem.Width.Set( -16f, 1f );
-			elem.Height.Set( 36f, 0f );
+			elem.Height.Set( 40f, 0f );
 
 			var img = new UIImage( Main.itemTexture[item.type] );
 			img.Top.Set( -10f, 0f );
 			img.Left.Set( -8f, 0f );
+			img.Width.Set( 24f, 0f );
+			img.Height.Set( 24f, 0f );
 
 			var label = new UIText( item.HoverName );
 			label.Top.Set( -4f, 0f );
