@@ -1,6 +1,7 @@
 author = hamstar
-version = 1.0.0
+version = 0.9.0
 displayName = Intrinsics
 modReferences = HamstarHelpers@4.4.0
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 languageVersion = 6
+homepage = https://forums.terraria.org/index.php?threads/intrinsics.80322/
