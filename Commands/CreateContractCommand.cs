@@ -31,6 +31,13 @@ namespace Intrinsics.Commands {
 		////////////////
 
 		public override void Action( CommandCaller caller, string input, string[] args ) {
+			var mymod = (IntrinsicsMod)this.mod;
+
+			if( !mymod.Config.DebugModeCheat ) {
+				caller.Reply( "Cheat mode not active. See configs.", Color.Red );
+				return;
+			}
+
 			if( Main.netMode == 1 ) {
 				LogHelpers.Warn( "Not supposed to run on client." );
 				return;
@@ -44,8 +51,6 @@ namespace Intrinsics.Commands {
 					return;
 				}
 			}
-
-			var mymod = (IntrinsicsMod)this.mod;
 
 			if( args.Length < 1 ) {
 				caller.Reply( "Insufficient arguments.", Color.Red );
@@ -62,12 +67,17 @@ namespace Intrinsics.Commands {
 			int nextArgIdx = 0;
 			do {
 				string itemName = CommandsHelpers.GetQuotedStringFromArgsAt( args, nextArgIdx, out nextArgIdx );
+				int itemId;
+
 				if( !ItemIdentityHelpers.NamesToIds.ContainsKey(itemName) ) {
-					caller.Reply( "Invalid item name: "+itemName, Color.Red );
-					return;
+					if( !Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid(itemName, out itemId) ) {
+						caller.Reply( "Invalid item name: " + itemName, Color.Red );
+						return;
+					}
+				} else {
+					itemId = ItemIdentityHelpers.NamesToIds[itemName];
 				}
 
-				int itemId = ItemIdentityHelpers.NamesToIds[ itemName ];
 				var item = new Item();
 				item.SetDefaults( itemId );
 

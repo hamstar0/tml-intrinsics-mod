@@ -52,6 +52,8 @@ namespace Intrinsics {
 		internal IDictionary<int, Item> IntrinsicAccItem = new Dictionary<int, Item>();
 		internal IDictionary<int, Item> IntrinsicBuffItem = new Dictionary<int, Item>();
 
+		internal IDictionary<int, bool> IntrinsicToggle = new Dictionary<int, bool>();
+
 		private Item PrevSelectedItem = null;
 
 

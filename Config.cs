@@ -16,6 +16,7 @@ namespace Intrinsics {
 		public string VersionSinceUpdate = "";
 
 		public bool DebugModeInfo = false;
+		public bool DebugModeCheat = false;
 
 		public int ControlsPositionX = -232;
 		public int ControlsPositionY = 120;
@@ -30,6 +31,8 @@ namespace Intrinsics {
 		public int TradeUIPositionY = 256;
 
 		public IDictionary<string, int> TradeItemContractTatters = new Dictionary<string, int>();
+
+		public bool ToggleableIntrinsics = true;
 
 
 

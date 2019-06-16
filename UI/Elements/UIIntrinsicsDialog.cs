@@ -1,7 +1,9 @@
-﻿using HamstarHelpers.Components.UI;
+﻿using HamstarHelpers.Components.DataStructures;
+using HamstarHelpers.Components.UI;
 using HamstarHelpers.Components.UI.Elements;
 using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Helpers.TmlHelpers;
+using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 using Terraria;
@@ -145,10 +147,12 @@ namespace Intrinsics.UI.Elements {
 		////////////////
 
 		private UIElement GetItemIntrinsic( Item item ) {
+			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
+			bool isEnabled = myplayer.IntrinsicToggle.GetOrDefault( item.type );
+
 			var elem = new UIPanel();
 			elem.Width.Set( -16f, 1f );
 			elem.Height.Set( 40f, 0f );
-
 			var img = new UIImage( Main.itemTexture[item.type] );
 			img.Top.Set( -10f, 0f );
 			img.Left.Set( -8f, 0f );
@@ -158,9 +162,22 @@ namespace Intrinsics.UI.Elements {
 			var label = new UIText( item.HoverName );
 			label.Top.Set( -4f, 0f );
 			label.Left.Set( 24f, 0f );
+			label.TextColor = isEnabled ? Color.White : new Color(96, 96, 96);
 
 			elem.Append( img );
 			elem.Append( label );
+
+			elem.OnClick += (_, __) => {
+				var mymod = IntrinsicsMod.Instance;
+				if( !mymod.Config.ToggleableIntrinsics ) {
+					return;
+				}
+
+				var myplayer2 = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
+				isEnabled = myplayer2.ToggleIntrinsic( item.type );
+				
+				label.TextColor = isEnabled ? Color.White : new Color( 96, 96, 96 );
+			};
 
 			return elem;
 		}

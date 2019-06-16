@@ -1,4 +1,5 @@
-﻿using HamstarHelpers.Helpers.ItemHelpers;
+﻿using HamstarHelpers.Components.DataStructures;
+using HamstarHelpers.Helpers.ItemHelpers;
 using Intrinsics.NetProtocols;
 using System;
 using Terraria;
@@ -22,6 +23,8 @@ namespace Intrinsics {
 				this.IntrinsicBuffItem[itemId] = item;
 				break;
 			}
+			
+			this.IntrinsicToggle[ itemId ] = true;
 
 			return item;
 		}
@@ -53,14 +56,14 @@ namespace Intrinsics {
 			this.IntrinsicItemUids.Remove( itemUid );
 
 			int itemId;
-			if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid(itemUid, out itemId) ) {
-				if( this.IntrinsicBuffItem.ContainsKey(itemId) ) {
+			if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
+				if( this.IntrinsicBuffItem.ContainsKey( itemId ) ) {
 					this.IntrinsicBuffItem.Remove( itemId );
 				}
-				if( this.IntrinsicArmItem.ContainsKey(itemId) ) {
+				if( this.IntrinsicArmItem.ContainsKey( itemId ) ) {
 					this.IntrinsicArmItem.Remove( itemId );
 				}
-				if( this.IntrinsicAccItem.ContainsKey(itemId) ) {
+				if( this.IntrinsicAccItem.ContainsKey( itemId ) ) {
 					this.IntrinsicAccItem.Remove( itemId );
 				}
 			}
@@ -69,8 +72,24 @@ namespace Intrinsics {
 
 		////////////////
 
+		public bool ToggleIntrinsic( int itemType ) {
+			if( !this.IntrinsicToggle.ContainsKey(itemType) ) {
+				return false;
+			}
+
+			this.IntrinsicToggle[itemType] = !this.IntrinsicToggle[itemType];
+			return this.IntrinsicToggle[itemType];
+		}
+
+
+		////////////////
+
 		private void UpdateIntrinsicBuffs() {
 			foreach( Item item in this.IntrinsicBuffItem.Values ) {
+				if( !this.IntrinsicToggle.GetOrDefault(item.type) ) {
+					continue;
+				}
+				
 				int buffIdx = this.player.FindBuffIndex( item.buffType );
 				if( buffIdx == -1 ) {
 					this.player.AddBuff( item.buffType, 3 );
@@ -83,10 +102,17 @@ namespace Intrinsics {
 		private void UpdateIntrinsicEquips() {
 			bool _ = false;
 			foreach( Item item in this.IntrinsicAccItem.Values ) {
+				if( !this.IntrinsicToggle.GetOrDefault(item.type) ) {
+					continue;
+				}
 				this.player.VanillaUpdateEquip( item );
 				this.player.VanillaUpdateAccessory( this.player.whoAmI, item, false, ref _, ref _, ref _ );
 			}
+
 			foreach( Item item in this.IntrinsicArmItem.Values ) {
+				if( !this.IntrinsicToggle.GetOrDefault(item.type) ) {
+					continue;
+				}
 				this.player.VanillaUpdateEquip( item );
 			}
 			//VanillaUpdateInventory( this.inventory[j] );
