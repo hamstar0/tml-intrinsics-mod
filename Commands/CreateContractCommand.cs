@@ -86,9 +86,12 @@ namespace Intrinsics.Commands {
 			}
 
 			IEnumerable<string> itemNames = items.Select( i => ItemIdentityHelpers.GetProperUniqueId( i.type ) );
-			ImpartmentContractItem.Create( Main.LocalPlayer, Main.LocalPlayer.Center, new HashSet<string>( itemNames ) );
 
-			caller.Reply( "Created Impartment Contract.", Color.Lime );
+			if( ImpartmentContractItem.Create( Main.LocalPlayer, Main.LocalPlayer.Center, new HashSet<string>( itemNames ) ) != -1 ) {
+				caller.Reply( "Created Impartment Contract.", Color.Lime );
+			} else {
+				caller.Reply( "Could not create Impartment Contract.", Color.Red );
+			}
 		}
 	}
 }

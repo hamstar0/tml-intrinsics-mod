@@ -37,10 +37,11 @@ namespace Intrinsics {
 				var mymod = IntrinsicsMod.Instance;
 				var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
 
-				if( mymod.IsTrading ) {
-					mymod.DrawTradeUI();
-				}
 				if( Main.playerInventory ) {
+					if( mymod.IsTrading ) {
+						mymod.DrawTradeUI();
+					}
+
 					//if( myplayer.IntrinsicItemUids.Count > 0 ) {
 					mymod.ControlsUIMngr?.Update( Main._drawInterfaceGameTime );
 					mymod.ControlsUI?.Draw( Main.spriteBatch );

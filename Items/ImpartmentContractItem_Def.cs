@@ -18,6 +18,11 @@ namespace Intrinsics.Items {
 		////////////////
 
 		public static int Create( Player player, Vector2 position, ISet<string> itemUids ) {
+Main.NewText( "No ImpartmentContractItem created for "+player.name+" (no items)" );
+			if( itemUids.Count == 0 ) {
+				return -1;
+			}
+
 			int itemIdx = ItemHelpers.CreateItem( position, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>(), 1, 24, 24 );
 			Item item = Main.item[itemIdx];
 			if( item == null || item.IsAir ) {
@@ -129,8 +134,8 @@ Main.NewText( "Invalid ImpartmentContractItem created for "+player.name );
 		}
 
 		public override void SetDefaults() {
-			this.item.width = 32;
-			this.item.height = 32;
+			this.item.width = 24;
+			this.item.height = 24;
 			this.item.value = Item.buyPrice( 1, 0, 0, 0 );
 			this.item.rare = ItemAttributeHelpers.HighestVanillaRarity;
 			this.item.consumable = true;

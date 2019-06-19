@@ -110,7 +110,6 @@ namespace Intrinsics.NPCs {
 
 		public override string TownNPCName() {
 			return "???";
-			//return "The Lunatic";
 		}
 
 		public override bool UsesPartyHat() {

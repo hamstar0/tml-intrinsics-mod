@@ -47,7 +47,7 @@ namespace Intrinsics.Items {
 				string itemUid = kv.Key;
 				int count = kv.Value;
 
-				if( ItemIdentityHelpers.TryGetTypeByUid(itemUid, out itemId ) ) {
+				if( count > 0 && ItemIdentityHelpers.TryGetTypeByUid(itemUid, out itemId ) ) {
 					this.AddIngredient( itemId, count );
 				}
 			}

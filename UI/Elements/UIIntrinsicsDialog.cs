@@ -21,7 +21,7 @@ namespace Intrinsics.UI.Elements {
 
 		////////////////
 
-		public UIIntrinsicsDialog() : base( UITheme.Vanilla, 360, 420 ) { }
+		public UIIntrinsicsDialog() : base( UITheme.Vanilla, 420, 420 ) { }
 
 
 		////////////////
@@ -175,7 +175,7 @@ namespace Intrinsics.UI.Elements {
 
 				var myplayer2 = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
 				isEnabled = myplayer2.ToggleIntrinsic( item.type );
-				
+
 				label.TextColor = isEnabled ? Color.White : new Color( 96, 96, 96 );
 			};
 
