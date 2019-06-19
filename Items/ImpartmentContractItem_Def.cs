@@ -19,11 +19,17 @@ namespace Intrinsics.Items {
 
 		public static int Create( Player player, Vector2 position, ISet<string> itemUids ) {
 			int itemIdx = ItemHelpers.CreateItem( position, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>(), 1, 24, 24 );
-			var myitem = Main.item[itemIdx].modItem as ImpartmentContractItem;
+			Item item = Main.item[itemIdx];
+			if( item == null || item.IsAir ) {
+Main.NewText( "No ImpartmentContractItem created for "+player.name );
+				return -1;
+			}
 
+			var myitem = item.modItem as ImpartmentContractItem;
 			if( myitem != null ) {
 				myitem.IntrinsicItemUids = itemUids;
 			} else {
+Main.NewText( "Invalid ImpartmentContractItem created for "+player.name );
 				itemIdx = -1;
 			}
 

@@ -1,8 +1,8 @@
 ﻿using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Helpers.ItemHelpers;
-using HamstarHelpers.Helpers.TmlHelpers.CommandsHelpers;
 using HamstarHelpers.Helpers.UserHelpers;
 using Intrinsics.Items;
+using Intrinsics.Libraries.Helpers.Commands;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -64,9 +64,10 @@ namespace Intrinsics.Commands {
 
 			IList<Item> items = new List<Item>();
 
-			int nextArgIdx = 0;
-			do {
-				string itemName = CommandsHelpers.GetQuotedStringFromArgsAt( args, nextArgIdx, out nextArgIdx );
+			int argNextIdx = 0;
+			string itemName;
+
+			while( CommandsHelpers.GetQuotedStringFromArgsAt(args, argNextIdx, out argNextIdx, out itemName) ) {
 				int itemId;
 
 				if( !ItemIdentityHelpers.NamesToIds.ContainsKey(itemName) ) {
@@ -82,7 +83,7 @@ namespace Intrinsics.Commands {
 				item.SetDefaults( itemId );
 
 				items.Add( item );
-			} while( nextArgIdx != -1 );
+			}
 
 			IEnumerable<string> itemNames = items.Select( i => ItemIdentityHelpers.GetProperUniqueId( i.type ) );
 			ImpartmentContractItem.Create( Main.LocalPlayer, Main.LocalPlayer.Center, new HashSet<string>( itemNames ) );

@@ -14,7 +14,10 @@ namespace Intrinsics.NPCs {
 			var mymod = IntrinsicsMod.Instance;
 			var plr = Main.player[ Main.myPlayer ];
 
-			mymod.IsTrading = mymod.IsTrading && !plr.dead && WanderingGhostNPC.CanTrade();
+			mymod.IsTrading = Main.playerInventory
+				&& mymod.IsTrading
+				&& !plr.dead
+				&& WanderingGhostNPC.CanTrade();
 
 			if( !mymod.IsTrading ) {
 				Item item = mymod.TradeItem;

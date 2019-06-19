@@ -38,6 +38,7 @@
     <Compile Include="Commands\RemoveIntrinsicCommand.cs" />
     <Compile Include="Commands\CreateContractCommand.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Libraries\Helpers\Commands\CommandsHelpers.cs" />
     <Compile Include="UI\Elements\UIIntrinsicsDialog.cs" />
     <Compile Include="Items\ContractTatterItem.cs" />
     <Compile Include="Items\ImpartmentContractItem_Draw.cs" />
