@@ -118,7 +118,7 @@ namespace Intrinsics.NPCs {
 		}
 
 		public override void SetChatButtons( ref string button, ref string button2 ) {
-			button = "Give rare item";
+			button = "Give rare item"; 
 		}
 
 		////////////////
