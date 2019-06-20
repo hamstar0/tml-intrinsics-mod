@@ -63,7 +63,7 @@ namespace Intrinsics.Commands {
 					return;
 				}
 			} else {
-				itemId = ItemIdentityHelpers.NamesToIds[itemName];
+				itemId = ItemIdentityHelpers.NamesToIds[ itemName ];
 			}
 
 			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );

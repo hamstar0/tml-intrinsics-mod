@@ -12,7 +12,7 @@ namespace Intrinsics.NPCs {
 	[AutoloadHead]
 	partial class WanderingGhostNPC : ModNPC {
 		public const string ChatText = "...";
-
+		
 		////
 
 		public static int MyType { get; private set; }
@@ -43,6 +43,12 @@ namespace Intrinsics.NPCs {
 		////////////////
 
 		public override string Texture => "Intrinsics/NPCs/WanderingGhostNPC";
+
+
+
+		////////////////
+
+		private string CurrentChat = WanderingGhostNPC.ChatText;
 
 
 
@@ -117,13 +123,16 @@ namespace Intrinsics.NPCs {
 		}
 
 		public override void SetChatButtons( ref string button, ref string button2 ) {
-			button = "Give rare item"; 
+			button = "Give rare item";
+			if( this.CurrentChat == WanderingGhostNPC.ChatText ) {
+				button2 = "...";
+			}
 		}
 
 		////////////////
 
 		public override string GetChat() {
-			return WanderingGhostNPC.ChatText;
+			return this.CurrentChat;
 		}
 
 

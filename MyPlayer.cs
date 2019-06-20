@@ -14,17 +14,17 @@ namespace Intrinsics {
 		private static bool AttemptBlankContractAddCurrentItem( Player player ) {
 			var contractItem = Main.mouseItem.modItem as BlankContractItem;
 			if( contractItem == null ) {
-Main.NewText("Swapped item not a BlankContractItem");
+//Main.NewText("Swapped item not a BlankContractItem");
 				return false;
 			}
 
 			if( contractItem.MyLastInventoryPosition == -1 ) {
-Main.NewText( "BlankContractItem does not know it's last inventory position" );
+//Main.NewText( "BlankContractItem does not know it's last inventory position" );
 				return false;
 			}
 			Item item = player.inventory[contractItem.MyLastInventoryPosition];
 			if( item == null ) {
-Main.NewText( "BlankContractItem reports it is not swapping with an item" );
+//Main.NewText( "BlankContractItem reports it is not swapping with an item" );
 				return false;
 			}
 

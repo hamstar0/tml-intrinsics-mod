@@ -18,7 +18,7 @@ namespace Intrinsics.Items {
 		////////////////
 
 		public static int Create( Player player, Vector2 position, ISet<string> itemUids ) {
-Main.NewText( "No ImpartmentContractItem created for "+player.name+" (no items)" );
+//Main.NewText( "No ImpartmentContractItem created for "+player.name+" (no items)" );
 			if( itemUids.Count == 0 ) {
 				return -1;
 			}
@@ -26,7 +26,7 @@ Main.NewText( "No ImpartmentContractItem created for "+player.name+" (no items)"
 			int itemIdx = ItemHelpers.CreateItem( position, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>(), 1, 24, 24 );
 			Item item = Main.item[itemIdx];
 			if( item == null || item.IsAir ) {
-Main.NewText( "No ImpartmentContractItem created for "+player.name );
+//Main.NewText( "No ImpartmentContractItem created for "+player.name );
 				return -1;
 			}
 
@@ -34,7 +34,7 @@ Main.NewText( "No ImpartmentContractItem created for "+player.name );
 			if( myitem != null ) {
 				myitem.IntrinsicItemUids = itemUids;
 			} else {
-Main.NewText( "Invalid ImpartmentContractItem created for "+player.name );
+//Main.NewText( "Invalid ImpartmentContractItem created for "+player.name );
 				itemIdx = -1;
 			}
 

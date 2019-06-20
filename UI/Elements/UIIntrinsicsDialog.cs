@@ -16,17 +16,45 @@ namespace Intrinsics.UI.Elements {
 		private UIList BuffList;
 		private UIList ArmList;
 		private UIList AccList;
+		private UIPanel CloseButton;
 
 
 
 		////////////////
 
-		public UIIntrinsicsDialog() : base( UITheme.Vanilla, 420, 420 ) { }
+		public UIIntrinsicsDialog() : base( UITheme.Vanilla, 480, 568 ) { }
 
 
 		////////////////
 
 		public override void InitializeComponents() {
+			Color bgColor = this.Theme.ButtonBgColor;
+
+			////
+
+			var closeText = new UIText( "X" );
+			closeText.Left.Set( -2f, 0f );
+			closeText.Top.Set( -4f, 0f );
+
+			this.CloseButton = new UIPanel();
+			this.CloseButton.Height.Set( 32f, 0f );
+			this.CloseButton.Width.Set( 32f, 0f );
+			this.CloseButton.Left.Set( -24f, 1f );
+			this.CloseButton.Top.Set( -8f, 0f );
+			this.CloseButton.Append( closeText );
+			this.CloseButton.OnMouseOver += ( _, __ ) => {
+				this.CloseButton.BackgroundColor = bgColor * 1.3f;
+			};
+			this.CloseButton.OnMouseOut += ( _, __ ) => {
+				this.CloseButton.BackgroundColor = bgColor;
+			};
+			this.CloseButton.OnClick += ( _, __ ) => {
+				this.Close();
+			};
+			this.InnerContainer.Append( this.CloseButton );
+
+			////
+
 			var title = new UIText( "Active intrinsics by item:" );
 			this.InnerContainer.Append( (UIElement)title );
 
@@ -34,19 +62,19 @@ namespace Intrinsics.UI.Elements {
 
 			var buffListWrap = new UIPanel();
 			buffListWrap.Top.Set( 32f, 0f );
-			buffListWrap.Height.Set( 120f, 0f );
+			buffListWrap.Height.Set( 172f, 0f );
 			buffListWrap.Width.Set( 0f, 1f );
 			this.InnerContainer.Append( (UIElement)buffListWrap );
 
 			var armListWrap = new UIPanel();
-			armListWrap.Top.Set( 280f, 0f );
-			armListWrap.Height.Set( 120f, 0f );
+			armListWrap.Top.Set( 208f, 0f );
+			armListWrap.Height.Set( 172f, 0f );
 			armListWrap.Width.Set( 0f, 1f );
 			this.InnerContainer.Append( (UIElement)armListWrap );
 
 			var accListWrap = new UIPanel();
-			accListWrap.Top.Set( 156f, 0f );
-			accListWrap.Height.Set( 120f, 0f );
+			accListWrap.Top.Set( 384f, 0f );
+			accListWrap.Height.Set( 172f, 0f );
 			accListWrap.Width.Set( 0f, 1f );
 			this.InnerContainer.Append( (UIElement)accListWrap );
 

@@ -2,6 +2,7 @@ using HamstarHelpers.Components.Errors;
 using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Helpers.ItemHelpers;
 using Intrinsics.Items;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -73,6 +74,8 @@ namespace Intrinsics.NPCs {
 				Main.npcChatText = "";
 				Main.PlaySound( 12, -1, -1, 1, 1f, 0f );
 				UILinkPointNavigator.GoToDefaultPage( 0 );
+			} else {
+				this.UpdateChatWithTip();
 			}
 		}
 
@@ -85,6 +88,27 @@ namespace Intrinsics.NPCs {
 				}
 			}
 //DebugHelpers.Print( "ghostai_"+npc.whoAmI, string.Join(", ", npc.ai.Select(a=>a.ToString("N2"))), 20 );
+		}
+
+
+		////////////////
+
+		public void UpdateChatWithTip() {
+			if( this.CurrentChat != WanderingGhostNPC.ChatText ) { return; }
+
+			var mymod = (IntrinsicsMod)this.mod;
+			int itemCount = mymod.Config.TradeItemContractTatters.Count;
+			string itemUid = mymod.Config.TradeItemContractTatters
+				.Keys
+				.ToArray()
+				[ Main.rand.Next(itemCount) ];
+
+			int itemId;
+			Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId );
+			string itemName = ItemIdentityHelpers.GetQualifiedName( itemId );
+
+			this.CurrentChat = "..." + itemName + "...";
+			Main.npcChatText = this.CurrentChat;
 		}
 	}
 }
