@@ -61,19 +61,19 @@ namespace Intrinsics.UI.Elements {
 			////
 
 			var buffListWrap = new UIPanel();
-			buffListWrap.Top.Set( 32f, 0f );
+			buffListWrap.Top.Set( 24f, 0f );
 			buffListWrap.Height.Set( 172f, 0f );
 			buffListWrap.Width.Set( 0f, 1f );
 			this.InnerContainer.Append( (UIElement)buffListWrap );
 
 			var armListWrap = new UIPanel();
-			armListWrap.Top.Set( 208f, 0f );
+			armListWrap.Top.Set( 200f, 0f );
 			armListWrap.Height.Set( 172f, 0f );
 			armListWrap.Width.Set( 0f, 1f );
 			this.InnerContainer.Append( (UIElement)armListWrap );
 
 			var accListWrap = new UIPanel();
-			accListWrap.Top.Set( 384f, 0f );
+			accListWrap.Top.Set( 376f, 0f );
 			accListWrap.Height.Set( 172f, 0f );
 			accListWrap.Width.Set( 0f, 1f );
 			this.InnerContainer.Append( (UIElement)accListWrap );
