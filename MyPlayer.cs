@@ -31,7 +31,7 @@ namespace Intrinsics {
 			bool isAdded = false;
 
 			if( contractItem.CanAddItem( item ) ) {
-				if( contractItem.AddItem( player, item ) ) {
+				if( contractItem.CreateImpartmentContract( player, item ) ) {
 					player.inventory[ contractItem.MyLastInventoryPosition ] = new Item();
 				} else {
 					player.inventory[ contractItem.MyLastInventoryPosition ] = Main.mouseItem;

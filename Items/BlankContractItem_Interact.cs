@@ -1,4 +1,5 @@
 using HamstarHelpers.Helpers.ItemHelpers;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,16 +20,13 @@ namespace Intrinsics.Items {
 	", is acc? "+item.accessory+
 	", is armor? "+ItemAttributeHelpers.IsArmor( item )
 );*/
-			if( this.IntrinsicItemUids.Contains( ItemIdentityHelpers.GetProperUniqueId(item.type) ) ) {
-				return false;
-			}
 			return IntrinsicsLogic.ItemHasIntrinsics( item );
 		}
 
-		public bool AddItem( Player player, Item item ) {
-			this.IntrinsicItemUids.Add( ItemIdentityHelpers.GetProperUniqueId(item.type) );
+		public bool CreateImpartmentContract( Player player, Item item ) {
+			var items = new HashSet<string> { ItemIdentityHelpers.GetProperUniqueId( item.type ) };
 
-			return ImpartmentContractItem.Create( player, player.Center, this.IntrinsicItemUids ) != -1;
+			return ImpartmentContractItem.Create( player, player.Center, items ) != -1;
 		}
 	}
 }
