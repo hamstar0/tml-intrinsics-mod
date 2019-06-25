@@ -114,7 +114,7 @@ namespace Intrinsics.UI {
 			this.ButtonOpenDialog.Left.Set( x, 0f );
 			this.ButtonOpenDialog.Top.Set( y, 0f );
 			this.Label.Left.Set( x + 24f, 0f );
-			this.Label.Top.Set( y + 4f, 0f );
+			this.Label.Top.Set( y, 0f );
 
 			this.Recalculate();
 		}
