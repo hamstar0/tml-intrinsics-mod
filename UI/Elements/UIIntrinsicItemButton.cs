@@ -59,7 +59,7 @@ namespace Intrinsics.UI.Elements {
 				var srcRect = new Rectangle( 0, this.CurrentFrame * height, itemTex.Width, height );
 				var destPos = new Vector2( 8f + this.GetOuterDimensions().X, 8f + this.GetOuterDimensions().Y );
 
-				float scale = itemTex.Width > itemTex.Height ? itemTex.Width : itemTex.Height;
+				float scale = itemTex.Width > height ? itemTex.Width : height;
 				scale = 24f/ scale;
 
 				sb.Draw( itemTex, destPos, new Rectangle?(srcRect), Color.White, 0f, default(Vector2), scale, SpriteEffects.None, 1f );
