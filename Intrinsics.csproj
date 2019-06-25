@@ -39,6 +39,7 @@
     <Compile Include="Commands\CreateContractCommand.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Libraries\Helpers\Commands\CommandsHelpers.cs" />
+    <Compile Include="UI\Elements\UIIntrinsicItemButton.cs" />
     <Compile Include="UI\Elements\UIIntrinsicsDialog.cs" />
     <Compile Include="Items\ContractTatterItem.cs" />
     <Compile Include="Items\ImpartmentContractItem_Draw.cs" />
@@ -79,8 +80,9 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="HamstarHelpers">
-      <HintPath>..\..\Mod Helpers\HamstarHelpers\bin\Release\HamstarHelpers.dll</HintPath>
+    <Reference Include="HamstarHelpers, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Mod Helpers\v4.4.0.1\HamstarHelpers\bin\Release\HamstarHelpers.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
