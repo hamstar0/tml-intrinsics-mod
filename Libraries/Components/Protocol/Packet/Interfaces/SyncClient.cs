@@ -41,17 +41,21 @@ namespace Libraries.Intrinsics.Components.Protocol.Packet.Interfaces {
 		protected sealed override void SetServerDefaults( int toWho ) {
 		}
 
-		protected abstract void Receive( int fromWho );
+		////////////////
+
+		protected abstract void ReceiveOnClient();
+		protected sealed override void ReceiveWithClient() {
+			this.ReceiveOnClient();
+		}
+
+		protected abstract void ReceiveOnServer( int fromWho );
 		protected sealed override void ReceiveWithServer( int fromWho ) {
-			this.Receive( fromWho );
+			this.ReceiveOnServer( fromWho );
 		}
 
 
 		////////////////
 
-		protected sealed override void ReceiveWithClient() {
-			throw new HamstarException( "Not implemented" );
-		}
 		protected sealed override bool ReceiveRequestWithClient() {
 			throw new HamstarException( "Not implemented" );
 		}

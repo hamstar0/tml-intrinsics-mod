@@ -51,8 +51,13 @@ namespace Intrinsics.NetProtocols {
 
 		////////////////
 
-		protected override void Receive( int fromWho ) {
+		protected override void ReceiveOnClient() {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
+			myplayer.IntrinsicItemUids = new HashSet<string>( this.ItemUids );
+		}
+
+		protected override void ReceiveOnServer( int fromWho ) {
+			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.player[fromWho] );
 			myplayer.IntrinsicItemUids = new HashSet<string>( this.ItemUids );
 		}
 	}

@@ -50,7 +50,7 @@ namespace Intrinsics.Items {
 
 
 		////////////////
-
+		
 		public override bool CloneNewInstances => true;
 
 
@@ -75,7 +75,7 @@ namespace Intrinsics.Items {
 
 
 		////////////////
-
+		
 		public override void Load( TagCompound tag ) {
 			if( !tag.ContainsKey( "item_count" ) ) {
 				return;
