@@ -39,7 +39,7 @@ namespace Intrinsics.Items {
 			}
 
 			if( Main.netMode == 1 ) {
-				NetMessage.SendData( MessageID.SyncItem, -1, Main.myPlayer, null, itemIdx );
+				NetMessage.SendData( MessageID.SyncItem, -1, Main.myPlayer, null, itemIdx, 1 );
 			}
 
 			return itemIdx;
