@@ -23,7 +23,7 @@ namespace Intrinsics.Items {
 				return -1;
 			}
 
-			int itemIdx = ItemHelpers.CreateItem( position, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>(), 1, 24, 24 );
+			int itemIdx = Item.NewItem( position, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>() );
 			Item item = Main.item[itemIdx];
 			if( item == null || item.IsAir ) {
 //Main.NewText( "No ImpartmentContractItem created for "+player.name );
@@ -36,6 +36,10 @@ namespace Intrinsics.Items {
 			} else {
 //Main.NewText( "Invalid ImpartmentContractItem created for "+player.name );
 				itemIdx = -1;
+			}
+
+			if( Main.netMode == 1 ) {
+				NetMessage.SendData( MessageID.SyncItem, -1, Main.myPlayer, null, itemIdx );
 			}
 
 			return itemIdx;

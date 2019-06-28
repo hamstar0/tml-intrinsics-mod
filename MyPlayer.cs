@@ -14,17 +14,17 @@ namespace Intrinsics {
 		private static bool AttemptBlankContractAddCurrentItem( Player player ) {
 			var contractItem = Main.mouseItem.modItem as BlankContractItem;
 			if( contractItem == null ) {
-//Main.NewText("Swapped item not a BlankContractItem");
+				//Main.NewText("Swapped item not a BlankContractItem");
 				return false;
 			}
 
 			if( contractItem.MyLastInventoryPosition == -1 ) {
-//Main.NewText( "BlankContractItem does not know it's last inventory position" );
+				//Main.NewText( "BlankContractItem does not know it's last inventory position" );
 				return false;
 			}
 			Item item = player.inventory[contractItem.MyLastInventoryPosition];
 			if( item == null ) {
-//Main.NewText( "BlankContractItem reports it is not swapping with an item" );
+				//Main.NewText( "BlankContractItem reports it is not swapping with an item" );
 				return false;
 			}
 
@@ -145,7 +145,7 @@ namespace Intrinsics {
 		private void OnConnectServer() {
 		}
 
-		
+
 		////////////////
 
 		public override void PreUpdate() {
@@ -162,8 +162,26 @@ namespace Intrinsics {
 		}
 
 		public override void PostUpdate() {
+			if( this.player.whoAmI != Main.myPlayer ) { return; }
+
+			this.UpdateContractInteractions();
+		}
+
+		public override void UpdateAutopause() {
+			if( this.player.whoAmI != Main.myPlayer ) { return; }
+			this.UpdateContractInteractions();
+		}
+
+
+		public override void UpdateEquips( ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff ) {
+			this.UpdateIntrinsicEquips();
+		}
+
+
+		////////////////
+
+		private void UpdateContractInteractions() {
 			Player plr = this.player;
-			if( plr.whoAmI != Main.myPlayer ) { return; }
 
 			if( Main.mouseItem != null && !Main.mouseItem.IsAir ) {
 				if( plr.HeldItem.type == this.mod.ItemType<BlankContractItem>() ) {
@@ -177,10 +195,6 @@ namespace Intrinsics {
 			} else {
 				this.PrevSelectedItem = null;
 			}
-		}
-
-		public override void UpdateEquips( ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff ) {
-			this.UpdateIntrinsicEquips();
 		}
 	}
 }
