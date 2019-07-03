@@ -38,19 +38,16 @@
     <Compile Include="Commands\RemoveIntrinsicCommand.cs" />
     <Compile Include="Commands\CreateContractCommand.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Libraries\Helpers\Commands\CommandsHelpers.cs" />
     <Compile Include="UI\Elements\UIIntrinsicItemButton.cs" />
     <Compile Include="UI\Elements\UIIntrinsicsDialog.cs" />
     <Compile Include="Items\ContractTatterItem.cs" />
     <Compile Include="Items\ImpartmentContractItem_Draw.cs" />
-    <Compile Include="Libraries\Helpers\NPCs\NPCHelpers.cs" />
     <Compile Include="IntrinsicsLogic.cs" />
     <Compile Include="Items\BlankContractItem_Interact.cs" />
     <Compile Include="Items\BlankContractItem_Recipe.cs" />
     <Compile Include="Items\BlankContractItem_Def.cs" />
     <Compile Include="Items\ImpartmentContractItem_Interact.cs" />
     <Compile Include="Items\ImpartmentContractItem_Def.cs" />
-    <Compile Include="Libraries\Helpers\Items\ItemIdentityHelpers.cs" />
     <Compile Include="MyMod_Draw.cs" />
     <Compile Include="MyMod.cs" />
     <Compile Include="MyPlayer_Intrinsics.cs" />
@@ -58,7 +55,6 @@
     <Compile Include="NetProtocols\IntrinsicsSyncProtocol.cs" />
     <Compile Include="NetProtocols\ModSettingsProtocol.cs" />
     <Compile Include="MyMod_Meta.cs" />
-    <Compile Include="Libraries\Components\Protocol\Packet\Interfaces\SyncClient.cs" />
     <Compile Include="NPCs\WanderingGhostNPC_Interact.cs" />
     <Compile Include="NPCs\WanderingGhostNPC.cs" />
     <Compile Include="UI\UI.cs" />
