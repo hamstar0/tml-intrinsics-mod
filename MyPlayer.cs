@@ -22,7 +22,7 @@ namespace Intrinsics {
 				//Main.NewText( "BlankContractItem does not know it's last inventory position" );
 				return false;
 			}
-			Item item = player.inventory[contractItem.MyLastInventoryPosition];
+			Item item = player.inventory[ contractItem.MyLastInventoryPosition ];
 			if( item == null ) {
 				//Main.NewText( "BlankContractItem reports it is not swapping with an item" );
 				return false;

@@ -1,5 +1,7 @@
+using HamstarHelpers.Helpers.ItemHelpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,6 +11,29 @@ namespace Intrinsics.Items {
 		private int FrameDelay = 0;
 		private int Frame = 0;
 
+
+
+		////////////////
+
+		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
+			var topTip = new TooltipLine( this.mod, "intrinsics", "This contract imparts intrinsics from the following items:" );
+			tooltips.Add( topTip );
+
+			int i = 0;
+			foreach( string itemUid in this.IntrinsicItemUids ) {
+				int itemId;
+				if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
+					var item = new Item();
+					item.SetDefaults( itemId, true );
+
+					var tip = new TooltipLine( this.mod, "intrinsic_" + i, "  " + item.HoverName );
+					tip.overrideColor = ItemAttributeHelpers.RarityColor[item.rare];
+					tooltips.Add( tip );
+
+					i++;
+				}
+			}
+		}
 
 
 		////////////////

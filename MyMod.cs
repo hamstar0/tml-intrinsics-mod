@@ -13,7 +13,7 @@ namespace Intrinsics {
 
 
 		////////////////
-		
+
 		internal Item TradeItem = new Item();
 		internal bool IsTrading = false;
 		internal UIIntrinsicsDialog IntrinsicsDialog;

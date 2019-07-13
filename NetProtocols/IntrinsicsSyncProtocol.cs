@@ -29,6 +29,7 @@ namespace Intrinsics.NetProtocols {
 		////////////////
 
 		public string[] ItemUids;
+		public int PlayerWho;
 
 
 
@@ -41,23 +42,25 @@ namespace Intrinsics.NetProtocols {
 		protected override void InitializeClientSendData() {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
 			this.ItemUids = myplayer.IntrinsicItemUids.ToArray();
+			this.PlayerWho = Main.myPlayer;
 		}
 		
 		protected override void InitializeServerRequestReplyDataOfClient( int toWho, int fromWho ) {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.player[fromWho] );
 			this.ItemUids = myplayer.IntrinsicItemUids.ToArray();
+			this.PlayerWho = fromWho;
 		}
 
 
 		////////////////
 
 		protected override void ReceiveOnClient() {
-			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
+			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.player[this.PlayerWho] );
 			myplayer.IntrinsicItemUids = new HashSet<string>( this.ItemUids );
 		}
 
 		protected override void ReceiveOnServer( int fromWho ) {
-			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.player[fromWho] );
+			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.player[this.PlayerWho] );
 			myplayer.IntrinsicItemUids = new HashSet<string>( this.ItemUids );
 		}
 	}

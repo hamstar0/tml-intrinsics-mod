@@ -1,3 +1,4 @@
+using HamstarHelpers.Helpers.DebugHelpers;
 using HamstarHelpers.Helpers.ItemHelpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,8 +19,9 @@ namespace Intrinsics.Items {
 		////////////////
 
 		public static int Create( Player player, Vector2 position, ISet<string> itemUids ) {
-//Main.NewText( "No ImpartmentContractItem created for "+player.name+" (no items)" );
 			if( itemUids.Count == 0 ) {
+//Main.NewText( "No ImpartmentContractItem created for "+player.name+" (no items)" );
+				LogHelpers.Warn( "No ImpartmentContractItem created for " + player.name + " (no items)" );
 				return -1;
 			}
 
@@ -27,6 +29,7 @@ namespace Intrinsics.Items {
 			Item item = Main.item[itemIdx];
 			if( item == null || item.IsAir ) {
 //Main.NewText( "No ImpartmentContractItem created for "+player.name );
+				LogHelpers.Warn( "No ImpartmentContractItem created for " + player.name );
 				return -1;
 			}
 
@@ -35,10 +38,11 @@ namespace Intrinsics.Items {
 				myitem.IntrinsicItemUids = itemUids;
 			} else {
 //Main.NewText( "Invalid ImpartmentContractItem created for "+player.name );
+				LogHelpers.Warn( "Invalid ImpartmentContractItem created for " + player.name );
 				itemIdx = -1;
 			}
 
-			if( Main.netMode == 1 ) {
+			if( Main.netMode == 1 && itemIdx != -1 ) {
 				NetMessage.SendData( MessageID.SyncItem, -1, Main.myPlayer, null, itemIdx, 1 );
 			}
 
@@ -109,6 +113,8 @@ namespace Intrinsics.Items {
 		}
 
 		public override void NetRecieve( BinaryReader reader ) {
+			this.IntrinsicItemUids.Clear();
+
 			int items = reader.ReadInt32();
 
 			for( int i = 0; i < items; i++ ) {
@@ -138,8 +144,8 @@ namespace Intrinsics.Items {
 		}
 
 		public override void SetDefaults() {
-			this.item.width = 24;
-			this.item.height = 24;
+			this.item.width = 32;
+			this.item.height = 32;
 			this.item.value = Item.buyPrice( 1, 0, 0, 0 );
 			this.item.rare = ItemAttributeHelpers.HighestVanillaRarity;
 			this.item.consumable = true;
@@ -147,29 +153,6 @@ namespace Intrinsics.Items {
 			this.item.useTime = 30;
 			this.item.useAnimation = 30;
 			this.item.UseSound = SoundID.Item4;
-		}
-
-
-		////////////////
-
-		public override void ModifyTooltips( List<TooltipLine> tooltips ) {
-			var topTip = new TooltipLine( this.mod, "intrinsics", "This contract imparts intrinsics from the following items:" );
-			tooltips.Add( topTip );
-
-			int i = 0;
-			foreach( string itemUid in this.IntrinsicItemUids ) {
-				int itemId;
-				if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid(itemUid, out itemId) ) {
-					var item = new Item();
-					item.SetDefaults( itemId, true );
-
-					var tip = new TooltipLine( this.mod, "intrinsic_" + i, "  " + item.HoverName );
-					tip.overrideColor = ItemAttributeHelpers.RarityColor[ item.rare ];
-					tooltips.Add( tip );
-
-					i++;
-				}
-			}
 		}
 	}
 }
