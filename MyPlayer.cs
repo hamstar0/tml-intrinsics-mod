@@ -1,4 +1,4 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
+﻿using HamstarHelpers.Helpers.Debug;
 using Intrinsics.Items;
 using Intrinsics.NetProtocols;
 using Intrinsics.NPCs;
@@ -130,16 +130,10 @@ namespace Intrinsics {
 		////////////////
 
 		private void OnConnectSingle() {
-			var mymod = (IntrinsicsMod)this.mod;
-
-			if( !mymod.ConfigJson.LoadFile() ) {
-				mymod.ConfigJson.SaveFile();
-			}
 		}
 
 		private void OnConnectClient() {
 			IntrinsicsSyncProtocol.SyncFromMe();
-			ModSettingsProtocol.QuickRequest();
 		}
 
 		private void OnConnectServer() {

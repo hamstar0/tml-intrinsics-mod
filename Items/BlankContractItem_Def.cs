@@ -1,4 +1,4 @@
-using HamstarHelpers.Helpers.ItemHelpers;
+using HamstarHelpers.Helpers.Items.Attributes;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +25,7 @@ namespace Intrinsics.Items {
 			this.item.width = 24;
 			this.item.height = 24;
 			this.item.value = Item.buyPrice( 1, 0, 0, 0 );
-			this.item.rare = ItemAttributeHelpers.HighestVanillaRarity;
+			this.item.rare = ItemRarityAttributeHelpers.HighestVanillaRarity;
 			this.item.consumable = true;
 			this.item.useStyle = 4;
 			this.item.useTime = 30;

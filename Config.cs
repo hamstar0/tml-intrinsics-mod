@@ -1,47 +1,80 @@
-﻿using HamstarHelpers.Components.Config;
-using HamstarHelpers.Helpers.ItemHelpers;
+﻿using HamstarHelpers.Helpers.Items;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.Serialization;
 using Terraria.ID;
+using Terraria.ModLoader.Config;
 
 
 namespace Intrinsics {
-	public class IntrinsicsConfigData : ConfigurationDataBase {
-		public readonly static string ConfigFileName = "Intrinsics Config.json";
+	public class IntrinsicsConfig : ModConfig {
+		public override ConfigScope Mode => ConfigScope.ServerSide;
 
 
-
-		////////////////
-
-		public string VersionSinceUpdate = "";
+		////
 
 		public bool DebugModeInfo = false;
+
 		public bool DebugModeCheat = false;
 
+
+		[DefaultValue( -232 )]
 		public int ControlsPositionX = -232;
+
+		[DefaultValue( 120 )]
 		public int ControlsPositionY = 120;
 
+
+		[DefaultValue( 3 )]
 		public int BlankContractRecipeContractTattersNeeded = 3;
-		public IDictionary<string, int> BlankContractAltRecipeIngredients = new Dictionary<string, int>();
+
+		public Dictionary<string, int> BlankContractAltRecipeIngredients = new Dictionary<string, int>();
+
 		//public string BlankContractRecipeStation = "";	//TODO
 
+
+		[DefaultValue( 0.015f )]
 		public float GhostNpcSpawnChance = 0.015f;
 
+
+		[DefaultValue( 64 )]
 		public int TradeUIPositionX = 64;
+
+		[DefaultValue( 256 )]
 		public int TradeUIPositionY = 256;
 
-		public IDictionary<string, int> TradeItemContractTatters = new Dictionary<string, int>();
 
+		public Dictionary<string, int> TradeItemContractTatters = new Dictionary<string, int>();
+
+
+		[DefaultValue( true )]
 		public bool ToggleableIntrinsics = true;
 
 
 
 		////////////////
 
-		public void SetDefaults() {
-			Func<int, string> n = ( int itemId ) => ItemIdentityHelpers.GetProperUniqueId( itemId );
-			
-			 this.TradeItemContractTatters[ n(ItemID.GPS) ] = 1;
+		public override ModConfig Clone() {
+			var clone = (IntrinsicsConfig)base.Clone();
+
+			clone.BlankContractAltRecipeIngredients = this.BlankContractAltRecipeIngredients?.ToDictionary( kv => kv.Key, kv => kv.Value );
+			clone.TradeItemContractTatters = this.TradeItemContractTatters?.ToDictionary( kv => kv.Key, kv => kv.Value );
+
+			return clone;
+		}
+
+		[OnDeserialized]
+		internal void OnDeserializedMethod( StreamingContext context ) {
+			if( this.TradeItemContractTatters != null ) {
+				return;
+			}
+			this.TradeItemContractTatters = new Dictionary<string, int>();
+
+			Func<int, string> n = ( int itemId ) => ItemIdentityHelpers.GetUniqueKey( itemId );    //TODO GetProperUniqueId
+
+			this.TradeItemContractTatters[ n(ItemID.GPS) ] = 1;
 			 this.TradeItemContractTatters[ n(ItemID.REK) ] = 1;
 			 this.TradeItemContractTatters[ n(ItemID.GoblinTech) ] = 1;
 			 this.TradeItemContractTatters[ n(ItemID.ArmorBracing ) ] = 1;
@@ -93,31 +126,6 @@ namespace Intrinsics {
 			this.TradeItemContractTatters[ n(ItemID.CellPhone) ] = 6;
 
 			this.TradeItemContractTatters[ n(ItemID.GreedyRing) ] = 7;
-		}
-
-
-		////////////////
-
-		public bool UpdateToLatestVersion() {
-			var mymod = IntrinsicsMod.Instance;
-			var newConfig = new IntrinsicsConfigData();
-			newConfig.SetDefaults();
-
-			var versSince = this.VersionSinceUpdate != "" ?
-				new Version( this.VersionSinceUpdate ) :
-				new Version();
-
-			if( versSince >= mymod.Version ) {
-				return false;
-			}
-
-			if( this.VersionSinceUpdate == "" ) {
-				this.SetDefaults();
-			}
-
-			this.VersionSinceUpdate = mymod.Version.ToString();
-
-			return true;
 		}
 	}
 }

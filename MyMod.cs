@@ -1,5 +1,5 @@
-using HamstarHelpers.Components.Config;
-using HamstarHelpers.Helpers.TmlHelpers.ModHelpers;
+using HamstarHelpers.Helpers.ModHelpers;
+using HamstarHelpers.Helpers.TModLoader.Mods;
 using Intrinsics.Items;
 using Intrinsics.UI.Elements;
 using Terraria;
@@ -20,46 +20,24 @@ namespace Intrinsics {
 
 		////////////////
 
-		public JsonConfig<IntrinsicsConfigData> ConfigJson { get; private set; }
-		public IntrinsicsConfigData Config => this.ConfigJson.Data;
+		public IntrinsicsConfig Config => this.GetConfig<IntrinsicsConfig>();
 
 
 
 		////////////////
 
 		public IntrinsicsMod() {
-			this.ConfigJson = new JsonConfig<IntrinsicsConfigData>(
-				IntrinsicsConfigData.ConfigFileName,
-				ConfigurationDataBase.RelativePath,
-				new IntrinsicsConfigData()
-			);
+			IntrinsicsMod.Instance = this;
 		}
 
 		////////////////
 
 		public override void Load() {
-			IntrinsicsMod.Instance = this;
-
 			this.GetItem<ImpartmentContractItem>()?.LoadContent();
-
-			this.LoadConfig();
 
 			if( !Main.dedServ ) {
 				this.IntrinsicsDialog = new UIIntrinsicsDialog();
 				this.InitializeControlsUI();
-			}
-		}
-
-		private void LoadConfig() {
-			if( !this.ConfigJson.LoadFile() ) {
-				this.Config.SetDefaults();
-				this.ConfigJson.SaveFile();
-				ErrorLogger.Log( "Intrinsics config " + this.Version.ToString() + " created." );
-			}
-
-			if( this.Config.UpdateToLatestVersion() ) {
-				ErrorLogger.Log( "Intrinsics updated to " + this.Version.ToString() );
-				this.ConfigJson.SaveFile();
 			}
 		}
 

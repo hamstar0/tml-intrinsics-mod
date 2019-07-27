@@ -1,5 +1,6 @@
-﻿using HamstarHelpers.Components.DataStructures;
-using HamstarHelpers.Helpers.ItemHelpers;
+﻿using HamstarHelpers.Helpers.DotNET.Extensions;
+using HamstarHelpers.Helpers.Items;
+using HamstarHelpers.Helpers.Items.Attributes;
 using Intrinsics.NetProtocols;
 using System;
 using Terraria;
@@ -34,10 +35,10 @@ namespace Intrinsics {
 		public void ApplyIntrinsic( string itemUid ) {
 			this.IntrinsicItemUids.Add( itemUid );
 
-			int itemId;
-			if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
+			int itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemUid );
+			if( itemId != 0 ) {
 				Item item = this.LoadIntrinsicItem( itemId );
-				string colorHex = ItemAttributeHelpers.RarityColor[item.rare].Hex3();
+				string colorHex = ItemRarityAttributeHelpers.RarityColor[item.rare].Hex3();
 
 				Main.NewText( "The deal is made. Imparting [c/" + colorHex + ":" + item.HoverName + "]..." );
 			}
@@ -55,8 +56,8 @@ namespace Intrinsics {
 		public void RemoveIntrinsic( string itemUid ) {
 			this.IntrinsicItemUids.Remove( itemUid );
 
-			int itemId;
-			if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId ) ) {
+			int itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemUid );
+			if( itemId != 0 ) {
 				if( this.IntrinsicBuffItem.ContainsKey( itemId ) ) {
 					this.IntrinsicBuffItem.Remove( itemId );
 				}

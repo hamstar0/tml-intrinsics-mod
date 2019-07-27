@@ -1,7 +1,7 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.ItemHelpers;
-using HamstarHelpers.Helpers.TmlHelpers;
-using HamstarHelpers.Helpers.UserHelpers;
+﻿using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.Items;
+using HamstarHelpers.Helpers.TModLoader;
+using HamstarHelpers.Helpers.User;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -58,7 +58,9 @@ namespace Intrinsics.Commands {
 			int itemId;
 
 			if( !ItemIdentityHelpers.NamesToIds.ContainsKey(itemName) ) {
-				if( !Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid(itemName, out itemId) ) {
+				itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemName );
+
+				if( itemId == 0 ) {
 					caller.Reply( "Invalid item name: " + itemName, Color.Red );
 					return;
 				}
@@ -68,7 +70,7 @@ namespace Intrinsics.Commands {
 
 			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
 
-			myplayer.RemoveIntrinsic( ItemIdentityHelpers.GetProperUniqueId(itemId) );
+			myplayer.RemoveIntrinsic( ItemIdentityHelpers.GetUniqueKey(itemId) );  //TODO GetProperUniqueId
 
 			caller.Reply( "Intrinsic removed.", Color.Lime );
 		}

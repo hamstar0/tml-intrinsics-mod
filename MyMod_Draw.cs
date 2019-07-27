@@ -1,5 +1,5 @@
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.TmlHelpers;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.TModLoader;
 using Intrinsics.NPCs;
 using Intrinsics.UI;
 using Microsoft.Xna.Framework;

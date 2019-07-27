@@ -15,7 +15,7 @@ namespace Intrinsics.Items {
 
 		public override bool PreDrawInInventory( SpriteBatch sb, Vector2 pos, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale ) {
 			var mymod = IntrinsicsMod.Instance;
-			Texture2D tex = ModLoader.GetTexture( this.Texture );
+			Texture2D tex = ModContent.GetTexture( this.Texture );
 			Texture2D texOverlay = ImpartmentContractItem.Overlay;
 			if( texOverlay == null ) {
 				return true;
@@ -40,7 +40,7 @@ namespace Intrinsics.Items {
 
 		public override bool PreDrawInWorld( SpriteBatch sb, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI ) {
 			var mymod = IntrinsicsMod.Instance;
-			Texture2D tex = ModLoader.GetTexture( this.Texture );
+			Texture2D tex = ModContent.GetTexture( this.Texture );
 			Texture2D texOverlay = ImpartmentContractItem.Overlay;
 			if( texOverlay == null ) {
 				return true;

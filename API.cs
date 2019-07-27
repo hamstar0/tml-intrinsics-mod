@@ -1,5 +1,5 @@
-﻿using HamstarHelpers.Helpers.ItemHelpers;
-using HamstarHelpers.Helpers.TmlHelpers;
+﻿using HamstarHelpers.Helpers.Items;
+using HamstarHelpers.Helpers.TModLoader;
 using Intrinsics.Items;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,19 +8,8 @@ using Terraria;
 
 namespace Intrinsics {
 	public static partial class IntrinsicsAPI {
-		public static IntrinsicsConfigData GetModSettings() {
-			return IntrinsicsMod.Instance.Config;
-		}
-
-		public static void SaveModSettingsChanges() {
-			IntrinsicsMod.Instance.ConfigJson.SaveFile();
-		}
-
-
-		////////////////
-
 		public static int CreateContract( Player player, params Item[] items ) {
-			IEnumerable<string> itemNames = items.Select( i => ItemIdentityHelpers.GetProperUniqueId( i.type ) );
+			IEnumerable<string> itemNames = items.Select( i => ItemIdentityHelpers.GetUniqueKey( i.type ) );   //TODO GetProperUniqueId
 			return ImpartmentContractItem.Create( player, player.Center, new HashSet<string>( itemNames ) );
 		}
 
@@ -37,7 +26,7 @@ namespace Intrinsics {
 			if( canApply ) {
 				var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( player );
 
-				myplayer.ApplyIntrinsic( ItemIdentityHelpers.GetProperUniqueId(intrinsicItem) );
+				myplayer.ApplyIntrinsic( ItemIdentityHelpers.GetUniqueKey( intrinsicItem) );   //TODO GetProperUniqueId
 			}
 
 			return canApply;
@@ -45,7 +34,7 @@ namespace Intrinsics {
 
 		public static void RemoveIntrinsic( Player player, Item item ) {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( player );
-			myplayer.RemoveIntrinsic( ItemIdentityHelpers.GetProperUniqueId(item) );
+			myplayer.RemoveIntrinsic( ItemIdentityHelpers.GetUniqueKey(item) );   //TODO GetProperUniqueId
 		}
 	}
 }

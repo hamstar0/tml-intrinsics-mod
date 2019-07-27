@@ -1,6 +1,6 @@
 using HamstarHelpers.Components.Errors;
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.ItemHelpers;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.Items;
 using Intrinsics.Items;
 using System.Linq;
 using Terraria;
@@ -46,7 +46,7 @@ namespace Intrinsics.NPCs {
 
 		public static bool AttemptTrade( ref Item tradeItem ) {
 			var mymod = IntrinsicsMod.Instance;
-			string itemUid = ItemIdentityHelpers.GetProperUniqueId( tradeItem.type );
+			string itemUid = ItemIdentityHelpers.GetUniqueKey( tradeItem.type );   //TODO GetProperUniqueId
 
 			if( mymod.Config.TradeItemContractTatters.ContainsKey(itemUid) ) {
 				int tatterNum = mymod.Config.TradeItemContractTatters[itemUid];
@@ -103,8 +103,9 @@ namespace Intrinsics.NPCs {
 				.ToArray()
 				[ Main.rand.Next(itemCount) ];
 
-			int itemId;
-			Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid( itemUid, out itemId );
+			int itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemUid );
+			if( itemId == 0 ) { return; }
+
 			string itemName = ItemIdentityHelpers.GetQualifiedName( itemId );
 
 			this.CurrentChat = "..." + itemName + "...";

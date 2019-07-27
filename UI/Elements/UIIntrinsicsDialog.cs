@@ -1,8 +1,8 @@
-﻿using HamstarHelpers.Components.DataStructures;
-using HamstarHelpers.Components.UI;
+﻿using HamstarHelpers.Components.UI;
 using HamstarHelpers.Components.UI.Elements;
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.TmlHelpers;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.DotNET.Extensions;
+using HamstarHelpers.Helpers.TModLoader;
 using Microsoft.Xna.Framework;
 using System;
 using System.Linq;

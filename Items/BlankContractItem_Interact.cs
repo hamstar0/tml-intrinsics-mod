@@ -1,4 +1,4 @@
-using HamstarHelpers.Helpers.ItemHelpers;
+using HamstarHelpers.Helpers.Items;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -24,7 +24,7 @@ namespace Intrinsics.Items {
 		}
 
 		public bool CreateImpartmentContract( Player player, Item item ) {
-			var items = new HashSet<string> { ItemIdentityHelpers.GetProperUniqueId( item.type ) };
+			var items = new HashSet<string> { ItemIdentityHelpers.GetUniqueKey( item.type ) };  //TODO GetProperUniqueId
 
 			return ImpartmentContractItem.Create( player, player.Center, items ) != -1;
 		}

@@ -1,4 +1,5 @@
-using HamstarHelpers.Helpers.ItemHelpers;
+using HamstarHelpers.Helpers.Items;
+using HamstarHelpers.Helpers.Items.Attributes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace Intrinsics.Items {
 		////////////////
 
 		internal void LoadContent() {
-			ImpartmentContractItem.Overlay = ModLoader.GetTexture( this.Texture + "_Overlay" );
+			ImpartmentContractItem.Overlay = ModContent.GetTexture( this.Texture + "_Overlay" );
 		}
 
 		internal void UnloadContent() {
@@ -141,7 +142,7 @@ namespace Intrinsics.Items {
 			this.item.width = 24;
 			this.item.height = 24;
 			this.item.value = Item.buyPrice( 1, 0, 0, 0 );
-			this.item.rare = ItemAttributeHelpers.HighestVanillaRarity;
+			this.item.rare = ItemRarityAttributeHelpers.HighestVanillaRarity;
 			this.item.consumable = true;
 			this.item.useStyle = 4;
 			this.item.useTime = 30;
@@ -158,17 +159,17 @@ namespace Intrinsics.Items {
 
 			int i = 0;
 			foreach( string itemUid in this.IntrinsicItemUids ) {
-				int itemId;
-				if( Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid(itemUid, out itemId) ) {
-					var item = new Item();
-					item.SetDefaults( itemId, true );
+				int itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemUid );
+				if( itemId == 0 ) { continue; }
 
-					var tip = new TooltipLine( this.mod, "intrinsic_" + i, "  " + item.HoverName );
-					tip.overrideColor = ItemAttributeHelpers.RarityColor[ item.rare ];
-					tooltips.Add( tip );
+				var item = new Item();
+				item.SetDefaults( itemId, true );
 
-					i++;
-				}
+				var tip = new TooltipLine( this.mod, "intrinsic_" + i, "  " + item.HoverName );
+				tip.overrideColor = ItemRarityAttributeHelpers.RarityColor[ item.rare ];
+				tooltips.Add( tip );
+
+				i++;
 			}
 		}
 	}

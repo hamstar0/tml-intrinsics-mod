@@ -1,7 +1,7 @@
 using HamstarHelpers.Components.Errors;
-using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.WorldHelpers;
-using Intrinsics.Libraries.Helpers.NPCs;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.World;
+using HamstarHelpers.Helpers.NPCs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

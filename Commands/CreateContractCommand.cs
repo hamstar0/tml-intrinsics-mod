@@ -1,8 +1,8 @@
-﻿using HamstarHelpers.Helpers.DebugHelpers;
-using HamstarHelpers.Helpers.ItemHelpers;
-using HamstarHelpers.Helpers.UserHelpers;
+﻿using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.Items;
+using HamstarHelpers.Helpers.TModLoader.Commands;
+using HamstarHelpers.Helpers.User;
 using Intrinsics.Items;
-using Intrinsics.Libraries.Helpers.Commands;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -65,18 +65,20 @@ namespace Intrinsics.Commands {
 			IList<Item> items = new List<Item>();
 
 			int argNextIdx = 0;
-			string itemName;
+			string itemKey;
 
-			while( CommandsHelpers.GetQuotedStringFromArgsAt(args, argNextIdx, out argNextIdx, out itemName) ) {
+			while( CommandsHelpers.GetQuotedStringFromArgsAt(args, argNextIdx, out argNextIdx, out itemKey) ) {
 				int itemId;
 
-				if( !ItemIdentityHelpers.NamesToIds.ContainsKey(itemName) ) {
-					if( !Libraries.Helpers.Items.ItemIdentityHelpers.TryGetTypeByUid(itemName, out itemId) ) {
-						caller.Reply( "Invalid item name: " + itemName, Color.Red );
+				if( !ItemIdentityHelpers.NamesToIds.ContainsKey(itemKey) ) {
+					itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemKey );
+
+					if( itemId == 0 ) {
+						caller.Reply( "Invalid item name: " + itemKey, Color.Red );
 						return;
 					}
 				} else {
-					itemId = ItemIdentityHelpers.NamesToIds[itemName];
+					itemId = ItemIdentityHelpers.NamesToIds[itemKey];
 				}
 
 				var item = new Item();
@@ -85,7 +87,7 @@ namespace Intrinsics.Commands {
 				items.Add( item );
 			}
 
-			IEnumerable<string> itemNames = items.Select( i => ItemIdentityHelpers.GetProperUniqueId( i.type ) );
+			IEnumerable<string> itemNames = items.Select( i => ItemIdentityHelpers.GetUniqueKey( i.type ) );    //TODO GetProperUniqueId
 
 			if( ImpartmentContractItem.Create( Main.LocalPlayer, Main.LocalPlayer.Center, new HashSet<string>( itemNames ) ) != -1 ) {
 				caller.Reply( "Created Impartment Contract.", Color.Lime );
