@@ -1,5 +1,6 @@
 ﻿using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Items;
+using HamstarHelpers.Helpers.Items.Attributes;
 using HamstarHelpers.Helpers.TModLoader.Commands;
 using HamstarHelpers.Helpers.User;
 using Intrinsics.Items;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 
@@ -70,15 +72,15 @@ namespace Intrinsics.Commands {
 			while( CommandsHelpers.GetQuotedStringFromArgsAt(args, argNextIdx, out argNextIdx, out itemKey) ) {
 				int itemId;
 
-				if( !ItemIdentityHelpers.NamesToIds.ContainsKey(itemKey) ) {
-					itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemKey );
+				if( !ItemAttributeHelpers.DisplayNamesToIds.ContainsKey(itemKey) ) {
+					itemId = ItemID.TypeFromUniqueKey( itemKey );
 
 					if( itemId == 0 ) {
 						caller.Reply( "Invalid item name: " + itemKey, Color.Red );
 						return;
 					}
 				} else {
-					itemId = ItemIdentityHelpers.NamesToIds[itemKey];
+					itemId = ItemAttributeHelpers.DisplayNamesToIds[itemKey];
 				}
 
 				var item = new Item();
@@ -87,7 +89,7 @@ namespace Intrinsics.Commands {
 				items.Add( item );
 			}
 
-			IEnumerable<string> itemNames = items.Select( i => ItemIdentityHelpers.GetUniqueKey( i.type ) );    //TODO GetProperUniqueId
+			IEnumerable<string> itemNames = items.Select( i => ItemID.GetUniqueKey( i.type ) );    //TODO GetProperUniqueId
 
 			if( ImpartmentContractItem.Create( Main.LocalPlayer, Main.LocalPlayer.Center, new HashSet<string>( itemNames ) ) != -1 ) {
 				caller.Reply( "Created Impartment Contract.", Color.Lime );

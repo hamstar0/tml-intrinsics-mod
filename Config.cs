@@ -72,7 +72,7 @@ namespace Intrinsics {
 			}
 			this.TradeItemContractTatters = new Dictionary<string, int>();
 
-			Func<int, string> n = ( int itemId ) => ItemIdentityHelpers.GetUniqueKey( itemId );    //TODO GetProperUniqueId
+			Func<int, string> n = ( int itemId ) => ItemID.GetUniqueKey( itemId );    //TODO GetProperUniqueId
 
 			this.TradeItemContractTatters[ n(ItemID.GPS) ] = 1;
 			 this.TradeItemContractTatters[ n(ItemID.REK) ] = 1;

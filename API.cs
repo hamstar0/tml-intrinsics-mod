@@ -4,12 +4,13 @@ using Intrinsics.Items;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 
 
 namespace Intrinsics {
 	public static partial class IntrinsicsAPI {
 		public static int CreateContract( Player player, params Item[] items ) {
-			IEnumerable<string> itemNames = items.Select( i => ItemIdentityHelpers.GetUniqueKey( i.type ) );   //TODO GetProperUniqueId
+			IEnumerable<string> itemNames = items.Select( i => ItemID.GetUniqueKey( i.type ) );   //TODO GetProperUniqueId
 			return ImpartmentContractItem.Create( player, player.Center, new HashSet<string>( itemNames ) );
 		}
 
@@ -26,7 +27,7 @@ namespace Intrinsics {
 			if( canApply ) {
 				var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( player );
 
-				myplayer.ApplyIntrinsic( ItemIdentityHelpers.GetUniqueKey( intrinsicItem) );   //TODO GetProperUniqueId
+				myplayer.ApplyIntrinsic( ItemID.GetUniqueKey( intrinsicItem) );   //TODO GetProperUniqueId
 			}
 
 			return canApply;
@@ -34,7 +35,7 @@ namespace Intrinsics {
 
 		public static void RemoveIntrinsic( Player player, Item item ) {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( player );
-			myplayer.RemoveIntrinsic( ItemIdentityHelpers.GetUniqueKey(item) );   //TODO GetProperUniqueId
+			myplayer.RemoveIntrinsic( ItemID.GetUniqueKey(item) );   //TODO GetProperUniqueId
 		}
 	}
 }

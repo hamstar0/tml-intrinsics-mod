@@ -159,7 +159,7 @@ namespace Intrinsics.Items {
 
 			int i = 0;
 			foreach( string itemUid in this.IntrinsicItemUids ) {
-				int itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemUid );
+				int itemId = ItemID.TypeFromUniqueKey( itemUid );
 				if( itemId == 0 ) { continue; }
 
 				var item = new Item();

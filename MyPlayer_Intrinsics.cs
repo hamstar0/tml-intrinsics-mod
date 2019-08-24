@@ -4,6 +4,7 @@ using HamstarHelpers.Helpers.Items.Attributes;
 using Intrinsics.NetProtocols;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 
@@ -35,7 +36,7 @@ namespace Intrinsics {
 		public void ApplyIntrinsic( string itemUid ) {
 			this.IntrinsicItemUids.Add( itemUid );
 
-			int itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemUid );
+			int itemId = ItemID.TypeFromUniqueKey( itemUid );
 			if( itemId != 0 ) {
 				Item item = this.LoadIntrinsicItem( itemId );
 				string colorHex = ItemRarityAttributeHelpers.RarityColor[item.rare].Hex3();
@@ -56,7 +57,7 @@ namespace Intrinsics {
 		public void RemoveIntrinsic( string itemUid ) {
 			this.IntrinsicItemUids.Remove( itemUid );
 
-			int itemId = ItemIdentityHelpers.TypeFromUniqueKey( itemUid );
+			int itemId = ItemID.TypeFromUniqueKey( itemUid );
 			if( itemId != 0 ) {
 				if( this.IntrinsicBuffItem.ContainsKey( itemId ) ) {
 					this.IntrinsicBuffItem.Remove( itemId );
