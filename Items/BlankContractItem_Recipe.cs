@@ -1,6 +1,7 @@
 using HamstarHelpers.Helpers.Items;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 
 
 namespace Intrinsics.Items {
@@ -42,13 +43,11 @@ namespace Intrinsics.Items {
 	class BlankContractAltRecipe : ModRecipe {
 		public BlankContractAltRecipe( IntrinsicsMod mymod, BlankContractItem myitem ) : base( mymod ) {
 			foreach( var kv in mymod.Config.BlankContractAltRecipeIngredients ) {
-				string itemUid = kv.Key;
+				ItemDefinition itemDef = kv.Key;
 				int count = kv.Value;
 
-				int itemId = ItemID.TypeFromUniqueKey( itemUid );
-
-				if( count > 0 && itemId != 0 ) {
-					this.AddIngredient( itemId, count );
+				if( count > 0 && itemDef.Type != 0 ) {
+					this.AddIngredient( itemDef.Type, count );
 				}
 			}
 

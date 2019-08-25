@@ -1,9 +1,7 @@
-﻿using HamstarHelpers.Helpers.Items;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.Serialization;
 using Terraria.ID;
 using Terraria.ModLoader.Config;
 
@@ -30,7 +28,7 @@ namespace Intrinsics {
 		[DefaultValue( 3 )]
 		public int BlankContractRecipeContractTattersNeeded = 3;
 
-		public Dictionary<string, int> BlankContractAltRecipeIngredients = new Dictionary<string, int>();
+		public Dictionary<ItemDefinition, int> BlankContractAltRecipeIngredients = new Dictionary<ItemDefinition, int>();
 
 		//public string BlankContractRecipeStation = "";	//TODO
 
@@ -46,7 +44,7 @@ namespace Intrinsics {
 		public int TradeUIPositionY = 256;
 
 
-		public Dictionary<string, int> TradeItemContractTatters = new Dictionary<string, int>();
+		public Dictionary<ItemDefinition, int> TradeItemContractTatters = new Dictionary<ItemDefinition, int>();
 
 
 		[DefaultValue( true )]
@@ -56,23 +54,10 @@ namespace Intrinsics {
 
 		////////////////
 
-		public override ModConfig Clone() {
-			var clone = (IntrinsicsConfig)base.Clone();
+		public IntrinsicsConfig() {
+			this.TradeItemContractTatters = new Dictionary<ItemDefinition, int>();
 
-			clone.BlankContractAltRecipeIngredients = this.BlankContractAltRecipeIngredients?.ToDictionary( kv => kv.Key, kv => kv.Value );
-			clone.TradeItemContractTatters = this.TradeItemContractTatters?.ToDictionary( kv => kv.Key, kv => kv.Value );
-
-			return clone;
-		}
-
-		[OnDeserialized]
-		internal void OnDeserializedMethod( StreamingContext context ) {
-			if( this.TradeItemContractTatters != null ) {
-				return;
-			}
-			this.TradeItemContractTatters = new Dictionary<string, int>();
-
-			Func<int, string> n = ( int itemId ) => ItemID.GetUniqueKey( itemId );    //TODO GetProperUniqueId
+			Func<int, ItemDefinition> n = ( int itemId ) => new ItemDefinition( itemId );    //TODO GetProperUniqueId
 
 			this.TradeItemContractTatters[ n(ItemID.GPS) ] = 1;
 			 this.TradeItemContractTatters[ n(ItemID.REK) ] = 1;
@@ -126,6 +111,17 @@ namespace Intrinsics {
 			this.TradeItemContractTatters[ n(ItemID.CellPhone) ] = 6;
 
 			this.TradeItemContractTatters[ n(ItemID.GreedyRing) ] = 7;
+		}
+
+		////
+
+		public override ModConfig Clone() {
+			var clone = (IntrinsicsConfig)base.Clone();
+
+			clone.BlankContractAltRecipeIngredients = this.BlankContractAltRecipeIngredients?.ToDictionary( kv => kv.Key, kv => kv.Value );
+			clone.TradeItemContractTatters = this.TradeItemContractTatters?.ToDictionary( kv => kv.Key, kv => kv.Value );
+
+			return clone;
 		}
 	}
 }

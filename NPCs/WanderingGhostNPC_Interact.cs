@@ -7,6 +7,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 using Terraria.UI.Gamepad;
 
 
@@ -47,10 +48,10 @@ namespace Intrinsics.NPCs {
 
 		public static bool AttemptTrade( ref Item tradeItem ) {
 			var mymod = IntrinsicsMod.Instance;
-			string itemUid = ItemID.GetUniqueKey( tradeItem.type );
+			var itemDef = new ItemDefinition( tradeItem.type );
 
-			if( mymod.Config.TradeItemContractTatters.ContainsKey(itemUid) ) {
-				int tatterNum = mymod.Config.TradeItemContractTatters[itemUid];
+			if( mymod.Config.TradeItemContractTatters.ContainsKey(itemDef) ) {
+				int tatterNum = mymod.Config.TradeItemContractTatters[itemDef];
 				NPC npc = WanderingGhostNPC.GetNearestGhost( Main.LocalPlayer );
 
 				ItemHelpers.CreateItem( npc.position, mymod.ItemType<ContractTatterItem>(), tatterNum, 16, 16 );
@@ -99,15 +100,14 @@ namespace Intrinsics.NPCs {
 
 			var mymod = (IntrinsicsMod)this.mod;
 			int itemCount = mymod.Config.TradeItemContractTatters.Count;
-			string itemUid = mymod.Config.TradeItemContractTatters
+			ItemDefinition itemDef = mymod.Config.TradeItemContractTatters
 				.Keys
 				.ToArray()
 				[ Main.rand.Next(itemCount) ];
 
-			int itemId = ItemID.TypeFromUniqueKey( itemUid );
-			if( itemId == 0 ) { return; }
+			if( itemDef.Type == 0 ) { return; }
 
-			string itemName = ItemAttributeHelpers.GetQualifiedName( itemId );
+			string itemName = ItemAttributeHelpers.GetQualifiedName( itemDef.Type );
 
 			this.CurrentChat = "..." + itemName + "...";
 			Main.npcChatText = this.CurrentChat;
