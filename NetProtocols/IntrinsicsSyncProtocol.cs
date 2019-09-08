@@ -1,4 +1,6 @@
-﻿using HamstarHelpers.Classes.Protocols.Packet.Interfaces;
+﻿using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Classes.Protocols.Packet.Interfaces;
+using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.TModLoader;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,7 @@ namespace Intrinsics.NetProtocols {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.player[playerWho] );
 			var protocol = new IntrinsicsSyncProtocol();
 
+			protocol.Who = playerWho;
 			protocol.ItemUids = myplayer.IntrinsicItemUids.ToArray();
 			protocol.SendToServer( true );
 		}
@@ -29,6 +32,7 @@ namespace Intrinsics.NetProtocols {
 		////////////////
 
 		public string[] ItemUids;
+		public int Who = Main.myPlayer;
 
 
 
@@ -44,20 +48,30 @@ namespace Intrinsics.NetProtocols {
 		}
 		
 		protected override void InitializeServerRequestReplyDataOfClient( int toWho, int fromWho ) {
-			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.player[fromWho] );
+			Player plr = Main.player[fromWho];
+			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( plr );
+
 			this.ItemUids = myplayer.IntrinsicItemUids.ToArray();
+			this.Who = fromWho;
 		}
 
 
 		////////////////
 
 		protected override void ReceiveOnClient() {
-			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
+			Player plr = Main.player[ this.Who ];
+			if( Main.myPlayer == this.Who ) {
+				LogHelpers.Warn( "Receiving our own data?" );
+				return;
+			}
+
+			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( plr );
 			myplayer.IntrinsicItemUids = new HashSet<string>( this.ItemUids );
 		}
 
 		protected override void ReceiveOnServer( int fromWho ) {
-			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.player[fromWho] );
+			Player plr = Main.player[ this.Who ];  //fromWho
+			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( plr );
 			myplayer.IntrinsicItemUids = new HashSet<string>( this.ItemUids );
 		}
 	}

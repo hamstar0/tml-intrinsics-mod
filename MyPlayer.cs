@@ -98,9 +98,20 @@ namespace Intrinsics {
 
 		////////////////
 
+		public override void clientClone( ModPlayer clientClone ) {
+			var myclone = (IntrinsicsPlayer)clientClone;
+			myclone.IntrinsicItemUids = new HashSet<string>( this.IntrinsicItemUids );
+			myclone.IntrinsicArmItem = new Dictionary<int, Item>( this.IntrinsicArmItem );
+			myclone.IntrinsicAccItem = new Dictionary<int, Item>( this.IntrinsicAccItem );
+			myclone.IntrinsicBuffItem = new Dictionary<int, Item>( this.IntrinsicBuffItem );
+			myclone.IntrinsicToggle = new Dictionary<int, bool>( this.IntrinsicToggle );
+			myclone.PrevSelectedItem = this.PrevSelectedItem?.Clone();
+		}
+
 		public override void SyncPlayer( int toWho, int fromWho, bool newPlayer ) {
 			if( Main.netMode == 1 ) {
 				if( newPlayer ) {
+					IntrinsicsSyncProtocol.SyncFromMe();
 					IntrinsicsSyncProtocol.SyncToMe();
 				}
 			} else if( Main.netMode == 2 ) {
@@ -109,6 +120,17 @@ namespace Intrinsics {
 				}
 			}
 		}
+
+		//public override void SendClientChanges( ModPlayer clientPlayer ) {
+		//	var myClientPlayer = (IntrinsicsPlayer)clientPlayer;
+		//
+		//	if( this.IntrinsicItemUids.Count != myClientPlayer.IntrinsicItemUids.Count ) {
+		//		IntrinsicsSyncProtocol.SyncFromMe();
+		//	}
+		//}
+
+
+		////////////////
 
 		public override void OnEnterWorld( Player player ) {
 			if( player.whoAmI != Main.myPlayer ) { return; }
