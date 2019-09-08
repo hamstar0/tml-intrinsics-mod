@@ -31,6 +31,7 @@ namespace Intrinsics.UI.Elements {
 			this.Width.Set( -16f, 1f );
 			this.Height.Set( 40f, 0f );
 			this.Append( label );
+
 			this.OnClick += ( _, __ ) => {
 				var mymod = IntrinsicsMod.Instance;
 				if( !mymod.Config.ToggleableIntrinsics ) {
@@ -74,6 +75,15 @@ namespace Intrinsics.UI.Elements {
 				}
 			} catch( Exception e ) {
 				Main.NewText( e.ToString(), Color.Red );
+			}
+		}
+
+
+		public void DrawOver() {
+			if( this.IsMouseHovering ) {
+				Main.instance.mouseNPC = -1;
+				Main.HoverItem = this.MyItem.Clone();
+				Main.instance.MouseText( this.MyItem.Name, this.MyItem.rare, 0, -1, -1, -1, -1 );
 			}
 		}
 	}

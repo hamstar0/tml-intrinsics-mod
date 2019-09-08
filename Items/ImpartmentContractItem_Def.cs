@@ -1,4 +1,3 @@
-using HamstarHelpers.Helpers.Items;
 using HamstarHelpers.Helpers.Items.Attributes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -74,7 +73,7 @@ namespace Intrinsics.Items {
 
 		public override ModItem Clone() {
 			var clone = (ImpartmentContractItem)base.Clone();
-			clone.IntrinsicItemUids = this.IntrinsicItemUids;
+			clone.IntrinsicItemUids = new HashSet<string>( this.IntrinsicItemUids );
 			return clone;
 		}
 

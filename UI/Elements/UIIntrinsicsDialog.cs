@@ -4,6 +4,7 @@ using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.DotNET.Extensions;
 using HamstarHelpers.Helpers.TModLoader;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
@@ -22,7 +23,7 @@ namespace Intrinsics.UI.Elements {
 
 		////////////////
 
-		public UIIntrinsicsDialog() : base( UITheme.Vanilla, 480, 568 ) { }
+		public UIIntrinsicsDialog() : base( UITheme.Vanilla, 480, 560 ) { }
 
 
 		////////////////
@@ -67,13 +68,13 @@ namespace Intrinsics.UI.Elements {
 			this.InnerContainer.Append( (UIElement)buffListWrap );
 
 			var armListWrap = new UIPanel();
-			armListWrap.Top.Set( 200f, 0f );
+			armListWrap.Top.Set( 196f, 0f );
 			armListWrap.Height.Set( 172f, 0f );
 			armListWrap.Width.Set( 0f, 1f );
 			this.InnerContainer.Append( (UIElement)armListWrap );
 
 			var accListWrap = new UIPanel();
-			accListWrap.Top.Set( 376f, 0f );
+			accListWrap.Top.Set( 368f, 0f );
 			accListWrap.Height.Set( 172f, 0f );
 			accListWrap.Width.Set( 0f, 1f );
 			this.InnerContainer.Append( (UIElement)accListWrap );
@@ -179,6 +180,24 @@ namespace Intrinsics.UI.Elements {
 			bool isEnabled = myplayer.IntrinsicToggle.GetOrDefault( item.type );
 
 			return new UIIntrinsicItemButton( item, isEnabled );
+		}
+
+
+		public override void Draw( SpriteBatch sb ) {
+			base.Draw( sb );
+
+			foreach( UIElement elem in this.BuffList._items ) {
+				if( !(elem is UIIntrinsicItemButton) ) { continue; }
+				((UIIntrinsicItemButton)elem).DrawOver();
+			}
+			foreach( UIElement elem in this.ArmList._items ) {
+				if( !( elem is UIIntrinsicItemButton ) ) { continue; }
+				( (UIIntrinsicItemButton)elem ).DrawOver();
+			}
+			foreach( UIElement elem in this.AccList._items ) {
+				if( !( elem is UIIntrinsicItemButton ) ) { continue; }
+				( (UIIntrinsicItemButton)elem ).DrawOver();
+			}
 		}
 	}
 }
