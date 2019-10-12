@@ -1,5 +1,4 @@
 ﻿using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.Items;
 using HamstarHelpers.Helpers.Items.Attributes;
 using HamstarHelpers.Helpers.TModLoader.Commands;
 using HamstarHelpers.Helpers.User;

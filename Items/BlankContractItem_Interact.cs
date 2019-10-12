@@ -1,4 +1,3 @@
-using HamstarHelpers.Helpers.Items;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;

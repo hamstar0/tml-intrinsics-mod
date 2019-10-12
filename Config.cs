@@ -8,6 +8,12 @@ using Terraria.ModLoader.Config;
 
 
 namespace Intrinsics {
+	class MyFloatInputElement : FloatInputElement { }
+
+
+
+
+
 	public class IntrinsicsConfig : ModConfig {
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 
@@ -39,7 +45,7 @@ namespace Intrinsics {
 
 		[Range( 0, 100f )]
 		[DefaultValue( 0.015f )]
-		[CustomModConfigItem( typeof( FloatInputElement ) )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
 		public float GhostNpcSpawnChance = 0.015f;
 
 
