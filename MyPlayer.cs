@@ -200,7 +200,7 @@ namespace Intrinsics {
 			Player plr = this.player;
 
 			if( Main.mouseItem != null && !Main.mouseItem.IsAir ) {
-				if( plr.HeldItem.type == this.mod.ItemType<BlankContractItem>() ) {
+				if( plr.HeldItem.type == ModContent.ItemType<BlankContractItem>() ) {
 					if( this.PrevSelectedItem != null ) {
 						IntrinsicsPlayer.AttemptBlankContractAddCurrentItem( plr );
 						this.PrevSelectedItem = null;

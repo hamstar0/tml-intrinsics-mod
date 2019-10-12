@@ -23,7 +23,7 @@ namespace Intrinsics.Items {
 				return -1;
 			}
 
-			int itemIdx = Item.NewItem( position, IntrinsicsMod.Instance.ItemType<ImpartmentContractItem>() );
+			int itemIdx = Item.NewItem( position, ModContent.ItemType<ImpartmentContractItem>() );
 			Item item = Main.item[itemIdx];
 			if( item == null || item.IsAir ) {
 //Main.NewText( "No ImpartmentContractItem created for "+player.name );

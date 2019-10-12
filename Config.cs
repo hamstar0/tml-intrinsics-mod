@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HamstarHelpers.Classes.UI.ModConfig;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,13 +19,16 @@ namespace Intrinsics {
 		public bool DebugModeCheat = false;
 
 
+		[Range( -2048, 2048 )]
 		[DefaultValue( -232 )]
 		public int ControlsPositionX = -232;
 
+		[Range( -1024, 1024 )]
 		[DefaultValue( 120 )]
 		public int ControlsPositionY = 120;
 
 
+		[Range(0, 999)]
 		[DefaultValue( 3 )]
 		public int BlankContractRecipeContractTattersNeeded = 3;
 
@@ -33,13 +37,17 @@ namespace Intrinsics {
 		//public string BlankContractRecipeStation = "";	//TODO
 
 
+		[Range( 0, 100f )]
 		[DefaultValue( 0.015f )]
+		[CustomModConfigItem( typeof( FloatInputElement ) )]
 		public float GhostNpcSpawnChance = 0.015f;
 
 
+		[Range( -2048, 2048 )]
 		[DefaultValue( 64 )]
 		public int TradeUIPositionX = 64;
 
+		[Range( -1024, 1024 )]
 		[DefaultValue( 256 )]
 		public int TradeUIPositionY = 256;
 

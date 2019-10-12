@@ -54,7 +54,7 @@ namespace Intrinsics.NPCs {
 				int tatterNum = mymod.Config.TradeItemContractTatters[itemDef];
 				NPC npc = WanderingGhostNPC.GetNearestGhost( Main.LocalPlayer );
 
-				ItemHelpers.CreateItem( npc.position, mymod.ItemType<ContractTatterItem>(), tatterNum, 16, 16 );
+				ItemHelpers.CreateItem( npc.position, ModContent.ItemType<ContractTatterItem>(), tatterNum, 16, 16 );
 				ItemHelpers.ReduceStack( tradeItem, 1 );
 
 				return true;

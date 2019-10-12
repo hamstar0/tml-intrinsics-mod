@@ -20,7 +20,7 @@ namespace Intrinsics {
 
 		////////////////
 
-		public IntrinsicsConfig Config => this.GetConfig<IntrinsicsConfig>();
+		public IntrinsicsConfig Config => ModContent.GetInstance<IntrinsicsConfig>();
 
 
 
@@ -33,7 +33,7 @@ namespace Intrinsics {
 		////////////////
 
 		public override void Load() {
-			this.GetItem<ImpartmentContractItem>()?.LoadContent();
+			ModContent.GetInstance<ImpartmentContractItem>()?.LoadContent();
 
 			if( !Main.dedServ ) {
 				this.IntrinsicsDialog = new UIIntrinsicsDialog();
@@ -42,7 +42,7 @@ namespace Intrinsics {
 		}
 
 		public override void Unload() {
-			this.GetItem<ImpartmentContractItem>()?.UnloadContent();
+			ModContent.GetInstance<ImpartmentContractItem>()?.UnloadContent();
 			IntrinsicsMod.Instance = null;
 		}
 

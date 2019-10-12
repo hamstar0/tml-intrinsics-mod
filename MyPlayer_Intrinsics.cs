@@ -95,7 +95,7 @@ namespace Intrinsics {
 				int buffIdx = this.player.FindBuffIndex( item.buffType );
 				if( buffIdx == -1 ) {
 					this.player.AddBuff( item.buffType, 3 );
-				} else {
+				} else if( buffIdx >= 0 && buffIdx < this.player.buffTime.Length ) {
 					this.player.buffTime[ buffIdx ] = 3;
 				}
 			}

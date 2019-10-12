@@ -26,7 +26,7 @@ namespace Intrinsics.Items {
 	class BlankContractRecipe : ModRecipe {
 		public BlankContractRecipe( IntrinsicsMod mymod, BlankContractItem myitem ) : base( mymod ) {
 			this.AddTile( TileID.WorkBenches );
-			this.AddIngredient( mymod.ItemType<ContractTatterItem>(), mymod.Config.BlankContractRecipeContractTattersNeeded );
+			this.AddIngredient( ModContent.ItemType<ContractTatterItem>(), mymod.Config.BlankContractRecipeContractTattersNeeded );
 
 			this.SetResult( myitem );
 		}
