@@ -2,6 +2,7 @@ using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.World;
 using HamstarHelpers.Helpers.NPCs;
+using HamstarHelpers.Services.Timers;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -139,9 +140,11 @@ namespace Intrinsics.NPCs {
 		////////////////
 
 		public override float SpawnChance( NPCSpawnInfo spawnInfo ) {
-			if( WorldHelpers.IsRockLayer(spawnInfo.player.position) ) {
-				var mymod = (IntrinsicsMod)this.mod;
-				return mymod.Config.GhostNpcSpawnChance;
+			if( Timers.GetTimerTickDuration( "IntrinsicsGhostExists" ) <= 0 ) {
+				if( WorldHelpers.IsRockLayer( spawnInfo.player.position ) ) {
+					var mymod = (IntrinsicsMod)this.mod;
+					return mymod.Config.GhostNpcSpawnChance;
+				}
 			}
 			return 0f;
 		}
@@ -150,9 +153,11 @@ namespace Intrinsics.NPCs {
 			float dist;
 			int playerIdx = this.npc.FindClosestPlayer( out dist );
 
-			if( dist >= 1300 ) {
+			if( dist >= 1300 ) {    // 81.25 tiles away
 				NPCHelpers.Remove( npc );
 				return false;
+			} else {
+				Timers.SetTimer( "IntrinsicsGhostExists", 2, () => false );
 			}
 
 			return base.CheckActive();
