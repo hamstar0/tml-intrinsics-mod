@@ -12,8 +12,6 @@ namespace Intrinsics {
 
 
 
-
-
 	public class IntrinsicsConfig : ModConfig {
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 

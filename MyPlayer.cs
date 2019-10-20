@@ -5,6 +5,7 @@ using Intrinsics.NPCs;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -76,9 +77,18 @@ namespace Intrinsics {
 
 			int count = tag.GetInt( "item_count" );
 
+			this.ClearIntrinsics( false );
+			this.IntrinsicToggle.Clear();
+
 			for( int i=0; i<count; i++ ) {
 				string itemUid = tag.GetString( "item_" + i );
-				this.ApplyIntrinsic( itemUid );
+				bool isEnabled = true;
+
+				if( tag.ContainsKey("item_"+i+"_on") ) {
+					isEnabled = tag.GetBool( "item_" + i + "_on" );
+				}
+
+				this.ApplyIntrinsic( itemUid, isEnabled );
 			}
 		}
 
@@ -89,6 +99,7 @@ namespace Intrinsics {
 			int i = 0;
 			foreach( string itemUid in this.IntrinsicItemUids ) {
 				tag[ "item_" + i ] = itemUid;
+				tag[ "item_" + i + "_on" ] = this.IntrinsicToggle[ ItemID.TypeFromUniqueKey(itemUid) ] ;
 				i++;
 			}
 

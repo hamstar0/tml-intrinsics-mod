@@ -1,8 +1,8 @@
 ﻿using HamstarHelpers.Helpers.DotNET.Extensions;
-using HamstarHelpers.Helpers.Items;
 using HamstarHelpers.Helpers.Items.Attributes;
 using Intrinsics.NetProtocols;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,26 +14,49 @@ namespace Intrinsics {
 			var item = new Item();
 			item.SetDefaults( itemId );
 
-			switch( IntrinsicsLogic.GetItemIntrinsicType( item ) ) {
-			case IntrinsicType.Armor:
-				this.IntrinsicArmItem[ itemId ] = item;
-				break;
-			case IntrinsicType.Accessory:
-				this.IntrinsicAccItem[itemId] = item;
-				break;
-			case IntrinsicType.Buff:
-				this.IntrinsicBuffItem[itemId] = item;
-				break;
-			}
-			
-			this.IntrinsicToggle[ itemId ] = true;
+			this.LoadIntrinsicItemInternal( item, true );
 
 			return item;
 		}
 
+		private void LoadIntrinsicItemInternal( Item item, bool itemState ) {
+			switch( IntrinsicsLogic.GetItemIntrinsicType( item ) ) {
+			case IntrinsicType.Armor:
+				this.IntrinsicArmItem[ item.type ] = item;
+				break;
+			case IntrinsicType.Accessory:
+				this.IntrinsicAccItem[ item.type ] = item;
+				break;
+			case IntrinsicType.Buff:
+				this.IntrinsicBuffItem[ item.type ] = item;
+				break;
+			}
+
+			this.IntrinsicToggle[ item.type ] = itemState;
+		}
+
 		/////
 
-		public void ApplyIntrinsic( string itemUid ) {
+		public void SyncIntrinsicItemsToMe( IEnumerable<string> itemUids, IDictionary<int, bool> itemStates ) {
+			this.IntrinsicItemUids = new HashSet<string>( itemUids );
+
+			foreach( string itemUid in itemUids ) {
+				int itemType = ItemID.TypeFromUniqueKey( itemUid );
+
+				bool itemState;
+				itemStates.TryGetValue( itemType, out itemState );
+
+				var item = new Item();
+				item.SetDefaults( itemType );
+
+				this.LoadIntrinsicItemInternal( item, itemState );
+			}
+		}
+
+
+		////////////////////
+
+		public void ApplyIntrinsic( string itemUid, bool isEnabled ) {
 			this.IntrinsicItemUids.Add( itemUid );
 
 			int itemId = ItemID.TypeFromUniqueKey( itemUid );
@@ -43,6 +66,8 @@ namespace Intrinsics {
 
 				Main.NewText( "The deal is made. Imparting [c/" + colorHex + ":" + item.HoverName + "]..." );
 			}
+
+			this.IntrinsicToggle[ itemId ] = isEnabled;
 
 			if( Main.netMode == 1 ) {
 				if( this.player.whoAmI == Main.myPlayer ) {
@@ -74,12 +99,37 @@ namespace Intrinsics {
 
 		////////////////
 
+		public void ClearIntrinsics( bool sync ) {
+			this.IntrinsicAccItem.Clear();
+			this.IntrinsicArmItem.Clear();
+			this.IntrinsicBuffItem.Clear();
+			this.IntrinsicItemUids.Clear();
+			this.IntrinsicToggle.Clear();
+
+			if( sync && Main.netMode == 1 ) {
+				if( this.player.whoAmI == Main.myPlayer ) {
+					IntrinsicsSyncProtocol.SyncFromMe();
+				} else {
+					IntrinsicsSyncProtocol.SyncFromOther( this.player.whoAmI );
+				}
+			}
+		}
+
 		public bool ToggleIntrinsic( int itemType ) {
 			if( !this.IntrinsicToggle.ContainsKey(itemType) ) {
 				return false;
 			}
 
 			this.IntrinsicToggle[itemType] = !this.IntrinsicToggle[itemType];
+
+			if( Main.netMode == 1 ) {
+				if( this.player.whoAmI == Main.myPlayer ) {
+					IntrinsicsSyncProtocol.SyncFromMe();
+				} else {
+					IntrinsicsSyncProtocol.SyncFromOther( this.player.whoAmI );
+				}
+			}
+
 			return this.IntrinsicToggle[itemType];
 		}
 
