@@ -21,13 +21,13 @@ namespace Intrinsics {
 			return IntrinsicsLogic.ItemHasIntrinsics( intrinsicItem );
 		}
 
-		public static bool ApplyIntrinsic( Player player, Item intrinsicItem, bool forceApply=false ) {
+		public static bool ApplyIntrinsic( Player player, Item intrinsicItem, bool isEnabled, bool forceApply=false ) {
 			bool canApply = forceApply || IntrinsicsLogic.ItemHasIntrinsics( intrinsicItem );
 
 			if( canApply ) {
 				var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( player );
 
-				myplayer.ApplyIntrinsic( ItemID.GetUniqueKey( intrinsicItem) );   //TODO GetProperUniqueId
+				myplayer.ApplyIntrinsic( ItemID.GetUniqueKey( intrinsicItem), isEnabled );   //TODO GetProperUniqueId
 			}
 
 			return canApply;

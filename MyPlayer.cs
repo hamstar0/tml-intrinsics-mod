@@ -20,11 +20,11 @@ namespace Intrinsics {
 			}
 
 			if( contractItem.MyLastInventoryPosition == -1 ) {
-				//Main.NewText( "BlankContractItem does not know it's last inventory position" );
+				//Main.NewText( "BlankContractItem does not know its last inventory position" );
 				return false;
 			}
 			Item item = player.inventory[contractItem.MyLastInventoryPosition];
-			if( item == null ) {
+			if( item?.active != true ) {
 				//Main.NewText( "BlankContractItem reports it is not swapping with an item" );
 				return false;
 			}
@@ -88,7 +88,12 @@ namespace Intrinsics {
 					isEnabled = tag.GetBool( "item_" + i + "_on" );
 				}
 
-				this.ApplyIntrinsic( itemUid, isEnabled );
+				try {
+					this.ApplyIntrinsic( itemUid, isEnabled );
+				} catch( Exception e ) {
+					LogHelpers.Warn( "Error applying intrinsic for "+this.player.name+" ("+this.player.whoAmI+")"
+							+" for item "+itemUid+" (on? "+isEnabled+") - "+e.ToString() );
+				}
 			}
 		}
 
@@ -195,6 +200,7 @@ namespace Intrinsics {
 		}
 
 		public override void UpdateAutopause() {
+			if( !Main.gamePaused ) { return; }
 			if( this.player.whoAmI != Main.myPlayer ) { return; }
 			this.UpdateContractInteractions();
 		}
@@ -211,13 +217,14 @@ namespace Intrinsics {
 			Player plr = this.player;
 
 			if( Main.mouseItem != null && !Main.mouseItem.IsAir ) {
-				if( plr.HeldItem.type == ModContent.ItemType<BlankContractItem>() ) {
+//DebugHelpers.Print("uci", "mouse:"+Main.mouseItem.HoverName+", held:"+plr.HeldItem?.HoverName+", PrevSelectedItem:"+this.PrevSelectedItem?.HoverName);
+				if( Main.mouseItem.type == ModContent.ItemType<BlankContractItem>() ) {
 					if( this.PrevSelectedItem != null ) {
 						IntrinsicsPlayer.AttemptBlankContractAddCurrentItem( plr );
 						this.PrevSelectedItem = null;
 					}
 				} else {
-					this.PrevSelectedItem = plr.HeldItem;
+					this.PrevSelectedItem = Main.mouseItem;
 				}
 			} else {
 				this.PrevSelectedItem = null;

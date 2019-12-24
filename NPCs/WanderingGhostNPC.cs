@@ -157,7 +157,7 @@ namespace Intrinsics.NPCs {
 				NPCHelpers.Remove( npc );
 				return false;
 			} else {
-				Timers.SetTimer( "IntrinsicsGhostExists", 2, () => false );
+				Timers.SetTimer( "IntrinsicsGhostExists", 2, false, () => false );
 			}
 
 			return base.CheckActive();

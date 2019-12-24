@@ -1,5 +1,5 @@
 author = hamstar
-version = 1.1.2.2
+version = 1.1.2.3
 displayName = Intrinsics
 modReferences = HamstarHelpers@5.2.1
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*

@@ -13,7 +13,7 @@ namespace Intrinsics.Items {
 			var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( player );
 
 			foreach( string itemUid in this.IntrinsicItemUids ) {
-				myplayer.ApplyIntrinsic( itemUid );
+				myplayer.ApplyIntrinsic( itemUid, true );
 			}
 			
 			return true;
