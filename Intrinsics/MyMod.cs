@@ -16,7 +16,10 @@ namespace Intrinsics {
 		
 		internal Item TradeItem = new Item();
 		internal bool IsTrading = false;
-		internal UIIntrinsicsDialog IntrinsicsDialog;
+		internal UIIntrinsicsDialog ControlPanelDialog;
+
+		internal ModHotKey ControlPanelHotkey;
+
 
 		////////////////
 
@@ -35,8 +38,10 @@ namespace Intrinsics {
 		public override void Load() {
 			ModContent.GetInstance<ImpartmentContractItem>()?.LoadContent();
 
+			this.ControlPanelHotkey = this.RegisterHotKey( "Control Panel", "P" );
+
 			if( !Main.dedServ ) {
-				this.IntrinsicsDialog = new UIIntrinsicsDialog();
+				this.ControlPanelDialog = new UIIntrinsicsDialog();
 				this.InitializeControlsUI();
 			}
 		}

@@ -1,13 +1,14 @@
-﻿using HamstarHelpers.Helpers.Debug;
-using Intrinsics.Items;
-using Intrinsics.NetProtocols;
-using Intrinsics.NPCs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using HamstarHelpers.Helpers.Debug;
+using Intrinsics.Items;
+using Intrinsics.NetProtocols;
+using Intrinsics.NPCs;
 
 
 namespace Intrinsics {
@@ -228,6 +229,15 @@ namespace Intrinsics {
 				}
 			} else {
 				this.PrevSelectedItem = null;
+			}
+		}
+
+
+		////////////////
+
+		public override void ProcessTriggers( TriggersSet triggersSet ) {
+			if( IntrinsicsMod.Instance.ControlPanelHotkey.JustPressed ) {
+				IntrinsicsMod.Instance.ControlPanelDialog.Open();
 			}
 		}
 	}

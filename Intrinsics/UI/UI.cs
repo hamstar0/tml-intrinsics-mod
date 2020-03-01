@@ -67,10 +67,10 @@ namespace Intrinsics.UI {
 			////
 
 			this.Label.OnClick += ( evt, elem ) => {
-				IntrinsicsMod.Instance.IntrinsicsDialog.Open();
+				IntrinsicsMod.Instance.ControlPanelDialog.Open();
 			};
 			this.ButtonOpenDialog.OnClick += ( evt, elem ) => {
-				IntrinsicsMod.Instance.IntrinsicsDialog.Open();
+				IntrinsicsMod.Instance.ControlPanelDialog.Open();
 			};
 
 			////
@@ -102,12 +102,12 @@ namespace Intrinsics.UI {
 		public void UpdateLayout() {
 			var mymod = IntrinsicsMod.Instance;
 
-			int x = mymod.Config.ControlsPositionX >= 0 ?
-				mymod.Config.ControlsPositionX :
-				Main.screenWidth + mymod.Config.ControlsPositionX;
-			int y = mymod.Config.ControlsPositionY >= 0 ?
-				mymod.Config.ControlsPositionY :
-				Main.screenHeight + mymod.Config.ControlsPositionY;
+			int x = mymod.Config.ControlsPositionX >= 0
+				? mymod.Config.ControlsPositionX
+				: Main.screenWidth + mymod.Config.ControlsPositionX;
+			int y = mymod.Config.ControlsPositionY >= 0
+				? mymod.Config.ControlsPositionY
+				: Main.screenHeight + mymod.Config.ControlsPositionY;
 
 			this.Recalculate();
 
