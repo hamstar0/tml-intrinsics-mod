@@ -1,51 +1,55 @@
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.TModLoader;
-using Intrinsics.NPCs;
-using Intrinsics.UI;
-using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.TModLoader;
+using Intrinsics.NPCs;
+using Intrinsics.UI;
 
 
 namespace Intrinsics {
 	partial class IntrinsicsMod : Mod {
-		private UserInterface ControlsUIMngr;
-		internal IntrinsicsControlsUI ControlsUI;
-
-
-
-		////////////////
-
 		private void InitializeControlsUI() {
-			this.ControlsUIMngr = new UserInterface();
-			this.ControlsUI = new IntrinsicsControlsUI();
-			this.ControlsUIMngr.SetState( this.ControlsUI );
+			this.UIContext = new UserInterface();
+			this.HUDComponents = new UIIntrinsicsHUD();
+
+			this.HUDComponents.Activate();
+			this.UIContext.SetState( this.HUDComponents );
 		}
 
 
 		////////////////
+
+		public override void UpdateUI( GameTime gameTime ) {
+			if( !this.ControlPanelDialog.IsOpen ) {
+				this.UIContext?.Update( Main._drawInterfaceGameTime );
+			}
+		}
+
 
 		public override void ModifyInterfaceLayers( List<GameInterfaceLayer> layers ) {
 			int idx = layers.FindIndex( layer => layer.Name.Equals( "Vanilla: Mouse Text" ) );
 			if( idx == -1 ) { return; }
 
 			GameInterfaceDrawMethod tradeUI = () => {
-				var mymod = IntrinsicsMod.Instance;
 				var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
 
 				if( Main.playerInventory ) {
-					if( mymod.IsTrading ) {
-						mymod.DrawTradeUI();
+					if( this.IsTrading ) {
+						this.DrawTradeUI();
 					}
 
-					//if( myplayer.IntrinsicItemUids.Count > 0 ) {
-					mymod.ControlsUIMngr?.Update( Main._drawInterfaceGameTime );
-					mymod.ControlsUI?.Draw( Main.spriteBatch );
-					//}
+					if( !this.ControlPanelDialog.IsOpen ) {
+						//if( myplayer.IntrinsicItemUids.Count > 0 ) {
+						this.UIContext.Draw( Main.spriteBatch, Main._drawInterfaceGameTime );
+						//mymod.ControlsUI?.Draw( Main.spriteBatch );
+						//}
+					}
 				}
 				return true;
 			};
@@ -79,7 +83,18 @@ namespace Intrinsics {
 			float oldInvScale = Main.inventoryScale;
 			Main.inventoryScale = 1f;
 
-			ChatManager.DrawColorCodedStringWithShadow( Main.spriteBatch, Main.fontMouseText, text, textPos, color, 0f, Vector2.Zero, Vector2.One, -1f, 2f );
+			ChatManager.DrawColorCodedStringWithShadow(
+				Main.spriteBatch,
+				Main.fontMouseText,
+				text,
+				textPos,
+				color,
+				0f,
+				Vector2.Zero,
+				Vector2.One,
+				-1f,
+				2f
+			);
 
 			int maxX = (int)( x + ((float)Main.inventoryBackTexture.Width * Main.inventoryScale) );
 			int maxY = (int)( y + ((float)Main.inventoryBackTexture.Height * Main.inventoryScale) );
@@ -98,7 +113,13 @@ namespace Intrinsics {
 				ItemSlot.MouseHover( ref this.TradeItem, 0 );
 			}
 
-			ItemSlot.Draw( Main.spriteBatch, ref this.TradeItem, ItemSlot.Context.GuideItem, new Vector2(x, y), default(Color) );
+			ItemSlot.Draw(
+				Main.spriteBatch,
+				ref this.TradeItem,
+				ItemSlot.Context.GuideItem,
+				new Vector2(x, y),
+				default(Color)
+			);
 
 			Main.inventoryScale = oldInvScale;
 		}

@@ -1,14 +1,14 @@
-using HamstarHelpers.Classes.Errors;
-using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.Items;
-using HamstarHelpers.Helpers.Items.Attributes;
-using Intrinsics.Items;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.UI.Gamepad;
+using HamstarHelpers.Classes.Errors;
+using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Helpers.Items;
+using HamstarHelpers.Helpers.Items.Attributes;
+using Intrinsics.Items;
 
 
 namespace Intrinsics.NPCs {

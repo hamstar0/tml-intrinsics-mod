@@ -1,14 +1,14 @@
-﻿using HamstarHelpers.Helpers.Debug;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
+using HamstarHelpers.Helpers.Debug;
 
 
 namespace Intrinsics.UI {
-	partial class IntrinsicsControlsUI : UIState {
+	partial class UIIntrinsicsHUD : UIState {
 		internal Texture2D ButtonPageAddTex;
 
 		private UIText Label;
@@ -18,7 +18,7 @@ namespace Intrinsics.UI {
 
 		////////////////
 
-		public IntrinsicsControlsUI() : base() {
+		public UIIntrinsicsHUD() : base() {
 			var mymod = IntrinsicsMod.Instance;
 
 			this.ButtonPageAddTex = mymod.GetTexture( "UI/Button" );

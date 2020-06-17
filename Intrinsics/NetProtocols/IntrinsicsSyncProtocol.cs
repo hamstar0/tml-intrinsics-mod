@@ -1,12 +1,12 @@
-﻿using HamstarHelpers.Classes.Errors;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Protocols.Packet.Interfaces;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.DotNET;
 using HamstarHelpers.Helpers.TModLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Terraria;
 
 
 namespace Intrinsics.NetProtocols {
