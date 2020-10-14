@@ -24,7 +24,7 @@ namespace Intrinsics.Items {
 		}
 
 		public bool CreateImpartmentContract( Player player, Item item ) {
-			var items = new HashSet<string> { ItemID.GetUniqueKey( item.type ) };  //TODO GetProperUniqueId
+			var items = new HashSet<string> { ItemID.GetUniqueKey( item.type ) };
 
 			return ImpartmentContractItem.Create( player, player.Center, items ) != -1;
 		}

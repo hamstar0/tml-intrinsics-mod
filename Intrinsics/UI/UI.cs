@@ -12,7 +12,7 @@ namespace Intrinsics.UI {
 		internal Texture2D ButtonPageAddTex;
 
 		private UIText Label;
-		private UIImageButton ButtonOpenDialog;
+		private UIImageButton DialogOpenButton;
 
 
 
@@ -29,7 +29,7 @@ namespace Intrinsics.UI {
 
 		public override void OnInitialize() {
 			this.Label = new UIText( "Show active intrinsics" );
-			this.ButtonOpenDialog = new UIImageButton( this.ButtonPageAddTex );
+			this.DialogOpenButton = new UIImageButton( this.ButtonPageAddTex );
 
 			bool isLabelHover = false;
 			bool isButtonHover = false;
@@ -40,24 +40,24 @@ namespace Intrinsics.UI {
 				if( isLabelHover ) { return; }
 				isLabelHover = true;
 				this.Label.TextColor = Color.White;
-				this.ButtonOpenDialog?.MouseOver(_);
+				this.DialogOpenButton?.MouseOver(_);
 				isLabelHover = false;
 			};
 			this.Label.OnMouseOut += ( _, __ ) => {
 				if( isLabelHover ) { return; }
 				isLabelHover = true;
-				this.ButtonOpenDialog?.MouseOut( _ );
+				this.DialogOpenButton?.MouseOut( _ );
 				isLabelHover = false;
 			};
 
-			this.ButtonOpenDialog.OnMouseOver += ( _, __ ) => {
+			this.DialogOpenButton.OnMouseOver += ( _, __ ) => {
 				if( isButtonHover ) { return; }
 				isButtonHover = true;
 				this.Label.TextColor = Color.White;
 				this.Label?.MouseOver( _ );
 				isButtonHover = false;
 			};
-			this.ButtonOpenDialog.OnMouseOut += ( _, __ ) => {
+			this.DialogOpenButton.OnMouseOut += ( _, __ ) => {
 				if( isButtonHover ) { return; }
 				isButtonHover = true;
 				this.Label?.MouseOut( _ );
@@ -69,7 +69,7 @@ namespace Intrinsics.UI {
 			this.Label.OnClick += ( evt, elem ) => {
 				IntrinsicsMod.Instance.ControlPanelDialog.Open();
 			};
-			this.ButtonOpenDialog.OnClick += ( evt, elem ) => {
+			this.DialogOpenButton.OnClick += ( evt, elem ) => {
 				IntrinsicsMod.Instance.ControlPanelDialog.Open();
 			};
 
@@ -80,7 +80,7 @@ namespace Intrinsics.UI {
 			////
 
 			base.Append( this.Label );
-			base.Append( this.ButtonOpenDialog );
+			base.Append( this.DialogOpenButton );
 		}
 
 
@@ -111,8 +111,8 @@ namespace Intrinsics.UI {
 
 			this.Recalculate();
 
-			this.ButtonOpenDialog.Left.Set( x, 0f );
-			this.ButtonOpenDialog.Top.Set( y - 8f, 0f );
+			this.DialogOpenButton.Left.Set( x, 0f );
+			this.DialogOpenButton.Top.Set( y - 8f, 0f );
 			this.Label.Left.Set( x + 24f, 0f );
 			this.Label.Top.Set( y - 6f, 0f );
 

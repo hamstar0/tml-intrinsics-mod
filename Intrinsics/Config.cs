@@ -1,10 +1,11 @@
-﻿using HamstarHelpers.Classes.UI.ModConfig;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
+using HamstarHelpers.Classes.UI.ModConfig;
 
 
 namespace Intrinsics {
@@ -12,31 +13,38 @@ namespace Intrinsics {
 
 
 
+
 	public class IntrinsicsConfig : ModConfig {
+		public static IntrinsicsConfig Instance => ModContent.GetInstance<IntrinsicsConfig>();
+
+
+
+		////////////////
+
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 
 
 		////
 
-		public bool DebugModeInfo = false;
+		public bool DebugModeInfo { get; set; } = false;
 
-		public bool DebugModeCheat = false;
+		public bool DebugModeCheat { get; set; } = false;
 
 
 		[Range( -2048, 2048 )]
 		[DefaultValue( -232 )]
-		public int ControlsPositionX = -232;
+		public int ControlsPositionX { get; set; } = -232;
 
 		[Range( -1024, 1024 )]
 		[DefaultValue( 120 )]
-		public int ControlsPositionY = 120;
+		public int ControlsPositionY { get; set; } = 120;
 
 
 		[Range(0, 999)]
 		[DefaultValue( 3 )]
-		public int BlankContractRecipeContractTattersNeeded = 3;
+		public int BlankContractRecipeContractTattersNeeded { get; set; } = 3;
 
-		public Dictionary<ItemDefinition, int> BlankContractAltRecipeIngredients = new Dictionary<ItemDefinition, int>();
+		public Dictionary<ItemDefinition, int> BlankContractAltRecipeIngredients { get; set; } = new Dictionary<ItemDefinition, int>();
 
 		//public string BlankContractRecipeStation = "";	//TODO
 
@@ -44,23 +52,28 @@ namespace Intrinsics {
 		[Range( 0, 100f )]
 		[DefaultValue( 0.015f )]
 		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
-		public float GhostNpcSpawnChance = 0.012f;
+		public float GhostNpcSpawnChance { get; set; } = 0.012f;
+
+		[Range( 0, 1f )]
+		[DefaultValue( 0.35f )]
+		[CustomModConfigItem( typeof( MyFloatInputElement ) )]
+		public float GhostNpcFadeAmount { get; set; } = 0.35f;
 
 
 		[Range( -2048, 2048 )]
 		[DefaultValue( 64 )]
-		public int TradeUIPositionX = 64;
+		public int TradeUIPositionX { get; set; } = 64;
 
 		[Range( -1024, 1024 )]
 		[DefaultValue( 256 )]
-		public int TradeUIPositionY = 256;
+		public int TradeUIPositionY { get; set; } = 256;
 
 
-		public Dictionary<ItemDefinition, int> TradeItemContractTatters = new Dictionary<ItemDefinition, int>();
+		public Dictionary<ItemDefinition, int> TradeItemContractTatters { get; set; } = new Dictionary<ItemDefinition, int>();
 
 
 		[DefaultValue( true )]
-		public bool ToggleableIntrinsics = true;
+		public bool ToggleableIntrinsics { get; set; } = true;
 
 
 

@@ -91,6 +91,7 @@ namespace Intrinsics.NPCs {
 			this.npc.knockBackResist = 0.5f;
 			this.npc.dontTakeDamage = true;
 			this.npc.dontTakeDamageFromHostiles = true;
+			this.npc.rarity = 2;
 
 			this.animationType = NPCID.Guide;
 		}
@@ -167,7 +168,9 @@ namespace Intrinsics.NPCs {
 		////////////////
 
 		public override Color? GetAlpha( Color drawColor ) {
-			var color = Color.Lerp(new Color( 128, 255, 255 ), drawColor, 0.5f) * 0.35f;
+			float ghostFade = IntrinsicsConfig.Instance.GhostNpcFadeAmount;
+			var color = Color.Lerp(new Color( 128, 255, 255 ), drawColor, 0.5f) * ghostFade;
+
 			return color;
 		}
 	}

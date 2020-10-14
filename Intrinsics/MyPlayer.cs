@@ -16,24 +16,36 @@ namespace Intrinsics {
 		private static bool AttemptBlankContractAddCurrentItem( Player player ) {
 			var contractItem = Main.mouseItem.modItem as BlankContractItem;
 			if( contractItem == null ) {
-				//Main.NewText("Swapped item not a BlankContractItem");
+				if( IntrinsicsConfig.Instance.DebugModeInfo ) {
+					Main.NewText("Swapped item not a BlankContractItem");
+				}
 				return false;
 			}
 
 			if( contractItem.MyLastInventoryPosition == -1 ) {
-				//Main.NewText( "BlankContractItem does not know its last inventory position" );
+				if( IntrinsicsConfig.Instance.DebugModeInfo ) {
+					Main.NewText( "BlankContractItem does not know its last inventory position" );
+				}
 				return false;
 			}
 			Item item = player.inventory[contractItem.MyLastInventoryPosition];
 			if( item?.active != true ) {
-				//Main.NewText( "BlankContractItem reports it is not swapping with an item" );
+				if( IntrinsicsConfig.Instance.DebugModeInfo ) {
+					Main.NewText( "BlankContractItem reports it is not swapping with an item" );
+				}
 				return false;
 			}
 
 			bool isAdded = false;
 
 			if( contractItem.CanAddItem( item ) ) {
-				if( contractItem.CreateImpartmentContract( player, item ) ) {
+				bool hasMadeContract = contractItem.CreateImpartmentContract( player, item );
+
+				if( IntrinsicsConfig.Instance.DebugModeInfo ) {
+					Main.NewText( "Impartment contract created? "+hasMadeContract );
+				}
+
+				if( hasMadeContract ) {
 					player.inventory[ contractItem.MyLastInventoryPosition ] = new Item();
 				} else {
 					player.inventory[ contractItem.MyLastInventoryPosition ] = Main.mouseItem;
@@ -215,20 +227,19 @@ namespace Intrinsics {
 		////////////////
 
 		private void UpdateContractInteractions() {
-			Player plr = this.player;
+			if( Main.mouseItem == null || Main.mouseItem.IsAir ) {
+				this.PrevSelectedItem = null;
+				return;
+			}
 
-			if( Main.mouseItem != null && !Main.mouseItem.IsAir ) {
 //DebugHelpers.Print("uci", "mouse:"+Main.mouseItem.HoverName+", held:"+plr.HeldItem?.HoverName+", PrevSelectedItem:"+this.PrevSelectedItem?.HoverName);
-				if( Main.mouseItem.type == ModContent.ItemType<BlankContractItem>() ) {
-					if( this.PrevSelectedItem != null ) {
-						IntrinsicsPlayer.AttemptBlankContractAddCurrentItem( plr );
-						this.PrevSelectedItem = null;
-					}
-				} else {
-					this.PrevSelectedItem = Main.mouseItem;
+			if( Main.mouseItem.type == ModContent.ItemType<BlankContractItem>() ) {
+				if( this.PrevSelectedItem != null ) {
+					IntrinsicsPlayer.AttemptBlankContractAddCurrentItem( this.player );
+					this.PrevSelectedItem = null;
 				}
 			} else {
-				this.PrevSelectedItem = null;
+				this.PrevSelectedItem = Main.mouseItem;
 			}
 		}
 

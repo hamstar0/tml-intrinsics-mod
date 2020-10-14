@@ -26,8 +26,9 @@ namespace Intrinsics {
 		////////////////
 
 		public override void UpdateUI( GameTime gameTime ) {
+			// Update HUD button when dialog not open
 			if( !this.ControlPanelDialog.IsOpen ) {
-				this.UIContext?.Update( Main._drawInterfaceGameTime );
+				this.UIContext?.Update( gameTime );
 			}
 		}
 
@@ -44,6 +45,7 @@ namespace Intrinsics {
 						this.DrawTradeUI();
 					}
 
+					// Draw HUD button when dialog not open
 					if( !this.ControlPanelDialog.IsOpen ) {
 						//if( myplayer.IntrinsicItemUids.Count > 0 ) {
 						this.UIContext.Draw( Main.spriteBatch, Main._drawInterfaceGameTime );
