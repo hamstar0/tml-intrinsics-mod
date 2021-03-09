@@ -1,12 +1,12 @@
-using HamstarHelpers.Helpers.Items.Attributes;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using HamstarHelpers.Helpers.Items.Attributes;
 
 
 namespace Intrinsics.Items {
@@ -133,7 +133,7 @@ namespace Intrinsics.Items {
 				"The item(s) used to make this contract define the intrinsic(s) applied.\n" +
 				"An intrinsic works exactly like equipping or using an item, but implicitly.\n" +
 				"Intrinsic impartments are permanent."
-			//"Sometimes more than one impartment may occur, good or bad."
+				//"Sometimes more than one impartment may occur, good or bad."
 			);
 		}
 

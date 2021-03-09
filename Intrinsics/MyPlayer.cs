@@ -6,63 +6,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using HamstarHelpers.Helpers.Debug;
-using Intrinsics.Items;
 using Intrinsics.NetProtocols;
-using Intrinsics.NPCs;
 
 
 namespace Intrinsics {
 	partial class IntrinsicsPlayer : ModPlayer {
-		private static bool AttemptBlankContractAddCurrentItem( Player player ) {
-			var contractItem = Main.mouseItem.modItem as BlankContractItem;
-			if( contractItem == null ) {
-				if( IntrinsicsConfig.Instance.DebugModeInfo ) {
-					Main.NewText("Swapped item not a BlankContractItem");
-				}
-				return false;
-			}
-
-			if( contractItem.MyLastInventoryPosition == -1 ) {
-				if( IntrinsicsConfig.Instance.DebugModeInfo ) {
-					Main.NewText( "BlankContractItem does not know its last inventory position" );
-				}
-				return false;
-			}
-			Item item = player.inventory[contractItem.MyLastInventoryPosition];
-			if( item?.active != true ) {
-				if( IntrinsicsConfig.Instance.DebugModeInfo ) {
-					Main.NewText( "BlankContractItem reports it is not swapping with an item" );
-				}
-				return false;
-			}
-
-			bool isAdded = false;
-
-			if( contractItem.CanAddItem( item ) ) {
-				bool hasMadeContract = contractItem.CreateImpartmentContract( player, item );
-
-				if( IntrinsicsConfig.Instance.DebugModeInfo ) {
-					Main.NewText( "Impartment contract created? "+hasMadeContract );
-				}
-
-				if( hasMadeContract ) {
-					player.inventory[ contractItem.MyLastInventoryPosition ] = new Item();
-				} else {
-					player.inventory[ contractItem.MyLastInventoryPosition ] = Main.mouseItem;
-				}
-
-				Main.mouseItem = new Item();
-
-				isAdded = true;
-			}
-
-			return isAdded;
-		}
-
-
-
-		////////////////
-
 		internal ISet<string> IntrinsicItemUids = new HashSet<string>();
 
 		internal IDictionary<int, Item> IntrinsicArmItem = new Dictionary<int, Item>();
@@ -71,7 +19,7 @@ namespace Intrinsics {
 
 		internal IDictionary<int, bool> IntrinsicToggle = new Dictionary<int, bool>();
 
-		private Item PrevSelectedItem = null;
+		private bool IsScribeMode = false;
 
 
 
@@ -134,20 +82,21 @@ namespace Intrinsics {
 			myclone.IntrinsicAccItem = new Dictionary<int, Item>( this.IntrinsicAccItem );
 			myclone.IntrinsicBuffItem = new Dictionary<int, Item>( this.IntrinsicBuffItem );
 			myclone.IntrinsicToggle = new Dictionary<int, bool>( this.IntrinsicToggle );
-			myclone.PrevSelectedItem = this.PrevSelectedItem?.Clone();
+			myclone.IsScribeMode = this.IsScribeMode;
 		}
 
 		public override void SyncPlayer( int toWho, int fromWho, bool newPlayer ) {
-			if( Main.netMode == 1 ) {
+			if( Main.netMode == NetmodeID.MultiplayerClient ) {
 				if( newPlayer ) {
 					IntrinsicsSyncProtocol.SyncFromMe();
 					IntrinsicsSyncProtocol.SyncToMe();
 				}
-			} else if( Main.netMode == 2 ) {
+			}
+			/*else if( Main.netMode == 2 ) {
 				if( toWho == -1 && fromWho == this.player.whoAmI ) {
 					this.OnConnectServer();
 				}
-			}
+			}*/
 		}
 
 		//public override void SendClientChanges( ModPlayer clientPlayer ) {
@@ -165,11 +114,9 @@ namespace Intrinsics {
 			if( player.whoAmI != Main.myPlayer ) { return; }
 			if( this.player.whoAmI != Main.myPlayer ) { return; }
 
-			var mymod = (IntrinsicsMod)this.mod;
-
-			if( Main.netMode == 0 ) {
+			if( Main.netMode == NetmodeID.SinglePlayer ) {
 				this.OnConnectSingle();
-			} else if( Main.netMode == 1 ) {
+			} else if( Main.netMode == NetmodeID.MultiplayerClient ) {
 				this.OnConnectClient();
 			}
 
@@ -192,60 +139,7 @@ namespace Intrinsics {
 
 
 		////////////////
-
-		public override void PreUpdate() {
-			var mymod = (IntrinsicsMod)this.mod;
-			Player plr = this.player;
-			//if( plr.whoAmI != Main.myPlayer ) { return; }
-			//if( plr.dead ) { return; }
-
-			if( plr.whoAmI == Main.myPlayer ) {
-				WanderingGhostNPC.UpdateTradingState();
-			}
-
-			this.UpdateIntrinsicBuffs();
-		}
-
-		public override void PostUpdate() {
-			if( this.player.whoAmI != Main.myPlayer ) { return; }
-
-			this.UpdateContractInteractions();
-		}
-
-		public override void UpdateAutopause() {
-			if( !Main.gamePaused ) { return; }
-			if( this.player.whoAmI != Main.myPlayer ) { return; }
-			this.UpdateContractInteractions();
-		}
-
-
-		public override void UpdateEquips( ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff ) {
-			this.UpdateIntrinsicEquips();
-		}
-
-
-		////////////////
-
-		private void UpdateContractInteractions() {
-			if( Main.mouseItem == null || Main.mouseItem.IsAir ) {
-				this.PrevSelectedItem = null;
-				return;
-			}
-
-//DebugHelpers.Print("uci", "mouse:"+Main.mouseItem.HoverName+", held:"+plr.HeldItem?.HoverName+", PrevSelectedItem:"+this.PrevSelectedItem?.HoverName);
-			if( Main.mouseItem.type == ModContent.ItemType<BlankContractItem>() ) {
-				if( this.PrevSelectedItem != null ) {
-					IntrinsicsPlayer.AttemptBlankContractAddCurrentItem( this.player );
-					this.PrevSelectedItem = null;
-				}
-			} else {
-				this.PrevSelectedItem = Main.mouseItem;
-			}
-		}
-
-
-		////////////////
-
+		
 		public override void ProcessTriggers( TriggersSet triggersSet ) {
 			if( IntrinsicsMod.Instance.ControlPanelHotkey.JustPressed ) {
 				IntrinsicsMod.Instance.ControlPanelDialog.Open();

@@ -1,21 +1,16 @@
-using HamstarHelpers.Helpers.Items.Attributes;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using HamstarHelpers.Helpers.Items.Attributes;
+using HamstarHelpers.Services.Timers;
 
 
 namespace Intrinsics.Items {
 	public partial class BlankContractItem : ModItem {
-		public int MyLastInventoryPosition { get; protected set; }
-
-
-
-		////////////////
-
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Blank Contract" );
-			this.Tooltip.SetDefault( "Write your own destiny."+
-				"\nDrop a valid item onto this contract to bind it."
+			this.Tooltip.SetDefault( "Write your own destiny."
+				+"\nRight-click begin picking an item to scribe into the contract"
+				+"\nLeft-click to select another item to scribe with"
 			);
 		}
 
@@ -26,18 +21,16 @@ namespace Intrinsics.Items {
 			this.item.rare = ItemRarityAttributeHelpers.HighestVanillaRarity;
 		}
 
+		////
 
-		////////////////
-		
-		public override void UpdateInventory( Player player ) {
-			this.MyLastInventoryPosition = -1;
+		public override bool CanRightClick() {
+			Timers.SetTimer( "PKEMeterToggleBlocker", 2, true, () => {
+				var myplayer = Main.LocalPlayer.GetModPlayer<IntrinsicsPlayer>();
+				myplayer.SetScribeMode( true );
 
-			for( int i = 0; i < player.inventory.Length; i++ ) {
-				if( player.inventory[i] == this.item ) {
-					this.MyLastInventoryPosition = i;
-					break;
-				}
-			}
+				return false;
+			} );
+			return false;
 		}
 	}
 }
