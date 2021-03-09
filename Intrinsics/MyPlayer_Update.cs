@@ -41,12 +41,17 @@ namespace Intrinsics {
 		////////////////
 
 		private void UpdateContractInteractionsIf() {
-			if( Main.mouseItem?.IsAir != false ) {
+			if( !this.IsScribeMode ) {
 				return;
 			}
 
-//DebugHelpers.Print("uci", "mouse:"+Main.mouseItem.HoverName+", held:"+plr.HeldItem?.HoverName+", PrevSelectedItem:"+this.PrevSelectedItem?.HoverName);
-			if( this.IsScribeMode ) {
+			if( !Main.playerInventory ) {
+				this.IsScribeMode = false;
+
+				return;
+			}
+
+			if( Main.mouseItem?.IsAir == false ) {
 				this.IsScribeMode = false;
 
 				IntrinsicsPlayer.ScribeBlankContractIf( this.player, Main.mouseItem );

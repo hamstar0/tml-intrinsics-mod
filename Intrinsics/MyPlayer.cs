@@ -19,7 +19,11 @@ namespace Intrinsics {
 
 		internal IDictionary<int, bool> IntrinsicToggle = new Dictionary<int, bool>();
 
-		private bool IsScribeMode = false;
+
+
+		////////////////
+
+		public bool IsScribeMode { get; private set; } = false;
 
 
 

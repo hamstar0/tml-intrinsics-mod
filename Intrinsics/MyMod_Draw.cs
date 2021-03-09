@@ -2,18 +2,21 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.UI;
-using Terraria.UI.Chat;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.TModLoader;
-using Intrinsics.NPCs;
 using Intrinsics.UI;
 
 
 namespace Intrinsics {
 	partial class IntrinsicsMod : Mod {
+		private void InitializeUI() {
+			this.InitializeControlsUI();
+
+			this.BlankContractTex = this.GetTexture( "Items/BlankContractItem" );
+		}
+
 		private void InitializeControlsUI() {
 			this.UIContext = new UserInterface();
 			this.HUDComponents = new UIIntrinsicsHUD();
@@ -34,9 +37,6 @@ namespace Intrinsics {
 
 
 		public override void ModifyInterfaceLayers( List<GameInterfaceLayer> layers ) {
-			int idx = layers.FindIndex( layer => layer.Name.Equals( "Vanilla: Mouse Text" ) );
-			if( idx == -1 ) { return; }
-
 			GameInterfaceDrawMethod tradeUI = () => {
 				var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
 
@@ -55,11 +55,34 @@ namespace Intrinsics {
 				}
 				return true;
 			};
+			
+			GameInterfaceDrawMethod cursorUI = () => {
+				var myplayer = TmlHelpers.SafelyGetModPlayer<IntrinsicsPlayer>( Main.LocalPlayer );
 
-			////
+				if( myplayer.IsScribeMode ) {
+					Main.spriteBatch.Draw(
+						texture: this.BlankContractTex,
+						position: Main.MouseScreen + new Vector2(12, 16),
+						color: Color.White
+					);
+				}
 
-			var tradeLayer = new LegacyGameInterfaceLayer( "Intrinsics: Trade UI", tradeUI, InterfaceScaleType.UI );
-			layers.Insert( idx, tradeLayer );
+				return true;
+			};
+
+			//
+
+			int mouseTextIdx = layers.FindIndex( layer => layer.Name.Equals( "Vanilla: Mouse Text" ) );
+			if( mouseTextIdx != -1 ) {
+				var tradeLayer = new LegacyGameInterfaceLayer( "Intrinsics: Trade UI", tradeUI, InterfaceScaleType.UI );
+				layers.Insert( mouseTextIdx, tradeLayer );
+			}
+
+			int cursorIdx = layers.FindIndex( layer => layer.Name.Equals( "Vanilla: Cursor" ) );
+			if( cursorIdx != -1 ) {
+				var cursorLayer = new LegacyGameInterfaceLayer( "Intrinsics: Scribe Cursor", cursorUI, InterfaceScaleType.UI );
+				layers.Insert( cursorIdx + 1, cursorLayer );
+			}
 		}
 	}
 }

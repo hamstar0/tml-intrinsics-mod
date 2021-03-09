@@ -1,7 +1,8 @@
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
-using HamstarHelpers.Helpers.ModHelpers;
+using Terraria.ID;
 using HamstarHelpers.Helpers.TModLoader.Mods;
 using Intrinsics.Items;
 using Intrinsics.UI;
@@ -25,6 +26,8 @@ namespace Intrinsics {
 		private UserInterface UIContext;
 		internal UIIntrinsicsHUD HUDComponents;
 
+		private Texture2D BlankContractTex;
+
 
 		////////////////
 
@@ -46,9 +49,9 @@ namespace Intrinsics {
 			this.ControlPanelHotkey = this.RegisterHotKey( "Control Panel", "P" );
 
 			// All code below runs only if we're not loading on a server
-			if( !Main.dedServ ) {
+			if( !Main.dedServ && Main.netMode != NetmodeID.Server ) {
 				this.ControlPanelDialog = new UIIntrinsicsDialog();
-				this.InitializeControlsUI();
+				this.InitializeUI();
 			}
 		}
 
