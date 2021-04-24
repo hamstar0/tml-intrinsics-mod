@@ -165,7 +165,12 @@ namespace Intrinsics.Items {
 				item.SetDefaults( itemId, true );
 
 				var tip = new TooltipLine( this.mod, "intrinsic_" + i, "  " + item.HoverName );
-				tip.overrideColor = ItemRarityAttributeHelpers.RarityColor[ item.rare ];
+
+				Color tryColor;
+				if( ItemRarityAttributeHelpers.RarityColor.TryGetValue(item.rare, out tryColor) ) {
+					tip.overrideColor = tryColor;
+				}
+
 				tooltips.Add( tip );
 
 				i++;

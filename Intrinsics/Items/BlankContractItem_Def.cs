@@ -9,8 +9,8 @@ namespace Intrinsics.Items {
 		public override void SetStaticDefaults() {
 			this.DisplayName.SetDefault( "Blank Contract" );
 			this.Tooltip.SetDefault( "Write your own destiny."
-				+"\nRight-click begin picking an item to scribe into the contract"
-				+"\nLeft-click to select another item to scribe with"
+				+"\nRight-click to begin picking a scribe item"
+				+"\nLeft-click with another item to scribe it into the contract"
 			);
 		}
 
