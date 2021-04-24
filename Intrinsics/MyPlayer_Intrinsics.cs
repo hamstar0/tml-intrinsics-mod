@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using HamstarHelpers.Helpers.DotNET.Extensions;
 using HamstarHelpers.Helpers.Items.Attributes;
 using Intrinsics.NetProtocols;
-
+using Microsoft.Xna.Framework;
 
 namespace Intrinsics {
 	partial class IntrinsicsPlayer : ModPlayer {
@@ -62,9 +62,15 @@ namespace Intrinsics {
 			int itemId = ItemID.TypeFromUniqueKey( itemUid );
 			if( itemId != 0 ) {
 				Item item = this.LoadIntrinsicItem( itemId );
-				string colorHex = ItemRarityAttributeHelpers.RarityColor[item.rare].Hex3();
 
-				Main.NewText( "The deal is made. Imparting [c/" + colorHex + ":" + item.HoverName + "]..." );
+				Color rareColor;
+				if( ItemRarityAttributeHelpers.RarityColor.TryGetValue(item.rare, out rareColor) ) {
+					string colorHex = rareColor.Hex3();
+
+					Main.NewText( "The deal is made. Imparting [c/"+colorHex+":" + item.HoverName + "]..." );
+				} else {
+					Main.NewText( "The deal is made. Imparting " + item.HoverName + "..." );
+				}
 			}
 
 			this.IntrinsicToggle[ itemId ] = isEnabled;
